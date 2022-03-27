@@ -13,9 +13,10 @@ type Props = Partial<DynamicProps<FormProps>>;
 export function useForm(props?: Props): UseFormReturnType {
   const formRef = ref<Nullable<FormActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
-
+  console.log('formRef', formRef);
   async function getForm() {
     const form = unref(formRef);
+    console.log('getForm=>formRef', form);
     if (!form) {
       error(
         'The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation!',
@@ -109,11 +110,13 @@ export function useForm(props?: Props): UseFormReturnType {
 
     validate: async (nameList?: NamePath[]): Promise<Recordable> => {
       const form = await getForm();
+      console.log('validate', form);
       return form.validate(nameList);
     },
 
     validateFields: async (nameList?: NamePath[]): Promise<Recordable> => {
       const form = await getForm();
+      console.log('validate', form);
       return form.validateFields(nameList);
     },
   };

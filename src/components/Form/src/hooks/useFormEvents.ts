@@ -29,6 +29,7 @@ export function useFormEvents({
   schemaRef,
   handleFormValues,
 }: UseFormActionContext) {
+  debugger;
   async function resetFields(): Promise<void> {
     const { resetFunc, submitOnReset } = unref(getProps);
     resetFunc && isFunction(resetFunc) && (await resetFunc());

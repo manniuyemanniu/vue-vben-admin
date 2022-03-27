@@ -25,6 +25,34 @@ const comp: AppRouteModule = {
     },
 
     {
+      path: 'devextreme',
+      name: 'devextremeDemo',
+      redirect: '/comp/devextreme/basic',
+      component: getParentLayout('devextremeDemo'),
+      meta: {
+        // icon: 'mdi:form-select',
+        title: t('routes.demo.devextreme.devextreme'),
+      },
+      children: [
+        {
+          path: 'basic',
+          name: 'datagriddemo',
+          component: () => import('/@/views/demo/devextreme/datagriddemo.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.datagriddemo'),
+          },
+        },
+        {
+          path: 'form',
+          name: 'formdemo',
+          component: () => import('/@/views/demo/devextreme/formdemo.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.formdemo'),
+          },
+        },
+      ],
+    },
+    {
       path: 'form',
       name: 'FormDemo',
       redirect: '/comp/form/basic',

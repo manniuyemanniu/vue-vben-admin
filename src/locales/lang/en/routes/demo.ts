@@ -1,4 +1,10 @@
 export default {
+  devextreme: {
+    devextreme: 'devextreme',
+    datagriddemo: 'datagriddemo',
+    formdemo: 'formdemo',
+    report: 'report',
+  },
   charts: {
     baiduMap: 'Baidu map',
     aMap: 'A map',

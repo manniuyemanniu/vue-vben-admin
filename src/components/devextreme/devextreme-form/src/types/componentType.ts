@@ -1,0 +1,18 @@
+export type ComponentType =
+  | 'dxAutocomplete'
+  | 'dxCalendar'
+  | 'dxCheckBox'
+  | 'dxColorBox'
+  | 'dxDateBox'
+  | 'dxDropDownBox'
+  | 'dxHtmlEditor'
+  | 'dxLookup'
+  | 'dxNumberBox'
+  | 'dxRadioGroup'
+  | 'dxRangeSlider'
+  | 'dxSelectBox'
+  | 'dxSlider'
+  | 'dxSwitch'
+  | 'dxTagBox'
+  | 'dxTextArea'
+  | 'dxTextBox';

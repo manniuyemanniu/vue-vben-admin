@@ -1,4 +1,10 @@
 export default {
+  devextreme: {
+    devextreme: 'devextreme',
+    datagriddemo: 'datagrid示例',
+    formdemo: '表单示例',
+    report: '打印报告',
+  },
   charts: {
     baiduMap: '百度地图',
     aMap: '高德地图',

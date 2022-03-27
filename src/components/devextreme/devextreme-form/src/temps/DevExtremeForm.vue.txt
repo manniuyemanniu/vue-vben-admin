@@ -1,0 +1,105 @@
+<!-- devextreme-form -->
+<template>
+  <div class="form-container">
+    <DxForm ref="DexExtemeDxFrom" v-model:form-data="getFormModel" v-bind="getBindFormValue">
+      <!-- 处理表单列信息 -->
+      <DxGroupItem v-bind="getBindGroupValue">
+        <template v-for="item in getSchema" :key="item.dataField">
+          <DxSimpleItem
+            :colSpan="item.colSpan"
+            :dataField="item.dataField"
+            :editorType="item.editorType"
+            :editorOptions="item.editorOptions"
+          />
+        </template>
+      </DxGroupItem>
+    </DxForm>
+  </div>
+</template>
+
+<script lang="ts">
+  import { computed, defineComponent, onMounted, ref, unref } from 'vue';
+  import { DxForm, DxGroupItem, DxSimpleItem } from 'devextreme-vue/form';
+  //  import { cloneDeep } from 'lodash-es';
+  import { deepMerge } from '/@/utils';
+  // import { DxForm } from 'devextreme-vue/form';
+  import { dxFormItemOption, dxFormActionType, DexExtremeFromProps } from './types/form';
+  import { formProps } from './props';
+  import { useGetBindValue } from './hooks/useGetBindValue';
+  export default defineComponent({
+    name: 'DevExtremeForm',
+    components: {
+      DxForm,
+      DxGroupItem,
+      DxSimpleItem,
+    },
+    props: formProps,
+    setup(props, { emit, attrs }) {
+      console.log('props', props);
+
+      const schemaRef = ref<Nullable<dxFormItemOption[]>>(null);
+
+      const formModelRef = ref<Nullable<[]>>(null);
+
+      //#region 【Props数据处理】
+      const propsRef = ref<Partial<DexExtremeFromProps>>({});
+
+      const getProps = computed((): DexExtremeFromProps => {
+        return { ...props, ...unref(propsRef) } as DexExtremeFromProps;
+      });
+      console.log('DevExtremeForm==>getProps', getProps.value);
+
+      const { getBindFormValue, getBindGroupValue } = useGetBindValue(getProps);
+
+      const getSchema = computed((): dxFormItemOption[] => {
+        const schemas: dxFormItemOption[] = unref(schemaRef) || (unref(getProps).schemas as any);
+        return schemas as dxFormItemOption[];
+      });
+
+      const getFormModel = computed((): any => {
+        const formModel: any = unref(formModelRef) || (unref(getProps).formData as any);
+        return formModel;
+      });
+      console.log('DevExtremeForm==>getSchema', getSchema.value);
+      //#endregion
+
+      //#region 【Hooks函数处理】
+
+      //#endregion
+
+      //#region 【v-bind绑定数据处理】
+      /**
+       * DxForm表单绑定属性
+       */
+      const getBindValue = computed(
+        () => ({ ...attrs, ...props, ...unref(getProps) } as Recordable),
+      );
+      //#endregion
+
+      async function setProps(formProps: Partial<DexExtremeFromProps>): Promise<void> {
+        propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
+      }
+
+      const formActionType: Partial<dxFormActionType> = {
+        setProps,
+      };
+
+      //#region 【生命周期函数】
+      onMounted(() => {
+        emit('register', formActionType);
+        console.log('DevExtremeForm==>onMounted=>getSchema', getSchema.value);
+        console.log('DevExtremeForm==>onMounted=>getFormModel', getFormModel.value);
+      });
+
+      //#endregion
+
+      return {
+        getBindValue,
+        getBindFormValue,
+        getBindGroupValue,
+        getSchema,
+        getFormModel,
+      };
+    },
+  });
+</script>
