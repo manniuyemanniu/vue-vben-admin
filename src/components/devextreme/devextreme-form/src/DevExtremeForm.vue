@@ -1,7 +1,8 @@
 <!-- devextreme-form -->
 <template>
-  <div class="form-container">
-    <DxForm ref="dxFormElRef" v-bind="getBindValue">
+  <!-- <div class="form-container"> -->
+  <div ref="wrapRef" :class="getDxFormClass">
+    <DxForm ref="dxFormElRef" v-bind="getBindValues">
       <!-- 处理表单列信息 -->
       <template v-for="item in getSchema" :key="item.dataField">
         <DxItem
@@ -43,6 +44,9 @@
   import DxTextArea from 'devextreme-vue/text-area';
   import DxTextBox from 'devextreme-vue/text-box';
   import { useDxFormEvent } from './hooks/useDxFormEvent';
+  import { useDesign } from '/@/hooks/web/useDesign';
+  import { createDxFormContext } from './hooks/useDxFormContext';
+  import { omit } from 'lodash-es';
   //#endregion
   export default defineComponent({
     // name: 'DevExtremeForm',
@@ -70,22 +74,24 @@
       // DxTextArea,
     },
     props: formProps,
-    setup(props, { emit, attrs }) {
-      console.log('props', props);
+    setup(props, { emit, attrs, slots, expose }) {
+      console.log('slots', slots);
+
       //表单响应式
 
+      const wrapRef = ref(null);
       const dxFormElRef = ref<Nullable<dxFormActionType>>(null);
-      const dataGridInstance = ref(null);
       //获取Items信息
       const schemaRef = ref<Nullable<dxFormItemOption[]>>(null);
 
-      console.log('dxFormElRef', dxFormElRef.value);
+      const { prefixCls } = useDesign('devExtreme-form');
+      // console.log('dxFormElRef', dxFormElRef.value);
 
       //#region 【Props数据处理】
       const propsRef = ref<Partial<dxFormOptions>>({});
 
       const getProps = computed((): dxFormOptions => {
-        return { ...props, ...unref(propsRef) } as dxFormOptions;
+        return { ...props, ...attrs, ...unref(propsRef) } as dxFormOptions;
       });
       // console.log('DevExtremeForm==>getProps', getProps.value);
 
@@ -95,15 +101,11 @@
       });
 
       // console.log('DevExtremeForm==>getFormModel', getFormModel.value);
-      //#endregion
 
-      //#region 【v-bind绑定数据处理】
-      /**
-       * DxForm表单绑定属性
-       */
-      const getBindValue = computed(
-        () => ({ ...attrs, ...props, ...unref(getProps) } as Recordable),
-      );
+      const getDxFormClass = computed(() => {
+        return [prefixCls];
+      });
+
       //#endregion
 
       async function setProps(formProps: Partial<dxFormOptions>): Promise<void> {
@@ -119,26 +121,64 @@
         dxFormElRef: dxFormElRef as Ref<dxFormActionType>,
       });
 
-      const formActionType: Partial<dxFormActionType> = {
+      const formActionType: dxFormActionType = {
         setProps,
         instance,
         customizeValidate,
       };
       //#endregion
 
-      //#region 【生命周期函数】
-      onMounted(() => {
-        emit('register', formActionType);
+      //#region 【v-bind绑定数据处理】
+      /**
+       * DxForm表单绑定属性
+       */
+      // const getBindValue = computed(
+      //   () => ({ ...attrs, ...props, ...unref(getProps) } as Recordable),
+      // );
+
+      const getBindValues = computed(() => {
+        let propsData: Recordable = {
+          ...unref(getProps),
+        };
+        propsData = omit(propsData);
+        return propsData;
       });
+      //#endregion
+
+      //#region 【expose暴露方法】
+
+      /**
+       * createTableContext主要是依赖注入方法
+       * exposr=>主要实现暴露方法
+       */
+      createDxFormContext({ ...formActionType, wrapRef, getBindValues });
+
+      expose(formActionType);
+      //#endregion
+
+      //#region 【Emit处理】
+
+      // emit('register', dataGridAction, formActions);
+
+      emit('register', formActionType);
+      //#endregion
+
+      //#region 【生命周期函数】
+      onMounted(() => {});
 
       //#endregion
 
-      console.log('dataGridInstance', dataGridInstance.value);
-      return {
-        dxFormElRef,
-        getBindValue,
-        getSchema,
-      };
+      return { wrapRef, dxFormElRef, getBindValues, getSchema, getDxFormClass };
     },
   });
 </script>
+
+<style lang="less" scoped>
+  @prefix-cls: ~'@{namespace}-devExtreme-form';
+
+  .@{prefix-cls} {
+    .aaa {
+      background: none;
+    }
+  }
+</style>

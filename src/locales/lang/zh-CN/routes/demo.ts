@@ -2,7 +2,10 @@ export default {
   devextreme: {
     devextreme: 'devextreme',
     datagriddemo: 'datagrid示例',
+    dataGridDemo02: 'datagrid示例02',
+    dataGridDemo03: 'datagrid示例03',
     formdemo: '表单示例',
+    formdemo02: '表单示例02',
     report: '打印报告',
   },
   charts: {

@@ -8,35 +8,76 @@ import { DevExtremeDataGridProps } from '../types/data-grid';
  * @returns
  */
 export function useCustomizeMethods(propsRef: ComputedRef<DevExtremeDataGridProps>) {
-  const { isCloseEidtClearSelection, customizeContentReady } = unref(propsRef);
-  let newcustomizeContentReady: (e: ContentReadyEvent) => void;
-  if (isCloseEidtClearSelection) {
-    if (typeof customizeContentReady == 'function') {
-      newcustomizeContentReady = (e: ContentReadyEvent) => {
-        console.log('newcustomizeContentReady');
-        //分页、查询、筛选、刷新后清空选中
-        e.component.clearSelection();
-        //调用原方法
-        customizeContentReady(e);
-      };
+  //#region
+  // const { isCloseEidtClearSelection, customizeContentReady } = unref(propsRef);
+  // let newcustomizeContentReady: (e: ContentReadyEvent) => void;
+  // if (isCloseEidtClearSelection) {
+  //   if (typeof customizeContentReady == 'function') {
+  //     newcustomizeContentReady = (e: ContentReadyEvent) => {
+  //       console.log('newcustomizeContentReady');
+  //       //分页、查询、筛选、刷新后清空选中
+  //       e.component.clearSelection();
+  //       //调用原方法
+  //       customizeContentReady(e);
+  //     };
+  //   } else {
+  //     newcustomizeContentReady = (e: ContentReadyEvent) => {
+  //       console.log('newcustomizeContentReady');
+  //       //分页、查询、筛选、刷新后清空选中
+  //       e.component.clearSelection();
+  //       //调用原方法
+  //     };
+  //   }
+  // } else {
+  //   if (typeof customizeContentReady == 'function') {
+  //     newcustomizeContentReady = customizeContentReady;
+  //   } else {
+  //     newcustomizeContentReady = (e: ContentReadyEvent) => {
+  //       console.log('newcustomizeContentReady', e);
+  //       console.log('newcustomizeContentReady');
+  //       //调用原方法
+  //     };
+  //   }
+  // }
+  // return { newcustomizeContentReady };
+
+  //#endregion
+  function onCustomizeContentReady(): (e: ContentReadyEvent) => void {
+    //#region 【处理onContentReady】
+    const { isCloseEidtClearSelection, customizeContentReady } = unref(propsRef);
+    let newcustomizeContentReady: (e: ContentReadyEvent) => void;
+    if (isCloseEidtClearSelection) {
+      if (typeof customizeContentReady == 'function') {
+        newcustomizeContentReady = (e: ContentReadyEvent) => {
+          console.log('newcustomizeContentReady');
+          //分页、查询、筛选、刷新后清空选中
+          e.component.clearSelection();
+          //调用原方法
+          customizeContentReady(e);
+        };
+      } else {
+        newcustomizeContentReady = (e: ContentReadyEvent) => {
+          console.log('newcustomizeContentReady');
+          //分页、查询、筛选、刷新后清空选中
+          e.component.clearSelection();
+          //调用原方法
+        };
+      }
     } else {
-      newcustomizeContentReady = (e: ContentReadyEvent) => {
-        console.log('newcustomizeContentReady');
-        //分页、查询、筛选、刷新后清空选中
-        e.component.clearSelection();
-        //调用原方法
-      };
+      if (typeof customizeContentReady == 'function') {
+        newcustomizeContentReady = customizeContentReady;
+      } else {
+        newcustomizeContentReady = (e: ContentReadyEvent) => {
+          console.log('newcustomizeContentReady', e);
+          console.log('newcustomizeContentReady');
+          //调用原方法
+        };
+      }
     }
-  } else {
-    if (typeof customizeContentReady == 'function') {
-      newcustomizeContentReady = customizeContentReady;
-    } else {
-      newcustomizeContentReady = (e: ContentReadyEvent) => {
-        console.log('newcustomizeContentReady', e);
-        console.log('newcustomizeContentReady');
-        //调用原方法
-      };
-    }
+    //#endregion
+
+    return newcustomizeContentReady;
   }
-  return { newcustomizeContentReady };
+
+  return { onCustomizeContentReady };
 }

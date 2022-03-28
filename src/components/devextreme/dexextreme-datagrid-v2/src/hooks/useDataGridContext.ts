@@ -1,16 +1,16 @@
 import type { Ref } from 'vue';
-import type { DevExtremeDataGridProps, DataGridActionType } from '../types/data-grid';
+import type { dataGridPropsOptions, dataGridActionOptions } from '../types/datagrid';
 import { provide, inject, ComputedRef } from 'vue';
 
 const key = Symbol('devextreme-datagrid');
 
-type Instance = DataGridActionType & {
+type Instance = dataGridActionOptions & {
   wrapRef?: Ref<Nullable<HTMLElement>>;
   getBindValues?: ComputedRef<Recordable>;
 };
 
 type RetInstance = Omit<Instance, 'getBindValues'> & {
-  getBindValues: ComputedRef<DevExtremeDataGridProps>;
+  getBindValues: ComputedRef<dataGridPropsOptions>;
 };
 
 export function createTableContext(instance: Instance) {

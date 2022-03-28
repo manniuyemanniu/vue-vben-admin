@@ -67,7 +67,6 @@
     // emits: ['onRowDblClick'],
     // setup(props, { attrs, emit, slots, expose }) {
     setup(props, context) {
-      console.log('props', props);
       const wapperRef = ref<HTMLElement | null>(null);
       const dataGridRefKey = ref<HTMLElement | any | null>(null);
       //#region 【computed计算属性】
@@ -77,7 +76,7 @@
       const dataGridInstance = computed(() => {
         return dataGridRefKey.value.instance;
       });
-      console.log('DevExtremeDataGrid=>dataGridInstance', dataGridInstance);
+      // console.log('DevExtremeDataGrid=>dataGridInstance', dataGridInstance);
 
       const innerPropsRef = ref<Partial<DevExtremeDataGridProps>>();
       // 获取Props
@@ -96,7 +95,7 @@
         getInstance,
       };
 
-      const { newcustomizeContentReady } = useCustomizeMethods(getProps);
+      const { onCustomizeContentReady } = useCustomizeMethods(getProps);
 
       // const { customRow } = useCustomRow(getProps, {
       //   emit,
@@ -140,14 +139,14 @@
         let propsData: Recordable = {
           // customRow,
           ...unref(getProps),
-          onContentReady: newcustomizeContentReady,
+          onContentReady: onCustomizeContentReady(),
         };
         // console.log(propsData);
         propsData = omit(propsData);
         return propsData;
       });
-      console.log('getBindValues.value.onContentReady', getBindValues.value.onContentReady);
-      console.log('DevExtremeDataGrid=>getBindValues', getBindValues.value);
+      // console.log('getBindValues.value.onContentReady', getBindValues.value.onContentReady);
+      // console.log('DevExtremeDataGrid=>getBindValues', getBindValues.value);
 
       //#endregion
 

@@ -2,7 +2,10 @@ export default {
   devextreme: {
     devextreme: 'devextreme',
     datagriddemo: 'datagriddemo',
+    dataGridDemo02: 'dataGridDemo02',
+    dataGridDemo03: 'dataGridDemo03',
     formdemo: 'formdemo',
+    formdemo02: 'formdemo02',
     report: 'report',
   },
   charts: {

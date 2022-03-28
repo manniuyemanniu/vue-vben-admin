@@ -43,11 +43,35 @@ const comp: AppRouteModule = {
           },
         },
         {
+          path: 'dataGridDemo02',
+          name: 'dataGridDemo02',
+          component: () => import('/@/views/demo/devextreme/dataGridDemo02.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.dataGridDemo02'),
+          },
+        },
+        {
+          path: 'dataGridDemo03',
+          name: 'dataGridDemo03',
+          component: () => import('/@/views/demo/devextreme/dataGridDemo03.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.dataGridDemo03'),
+          },
+        },
+        {
           path: 'form',
           name: 'formdemo',
           component: () => import('/@/views/demo/devextreme/formdemo.vue'),
           meta: {
             title: t('routes.demo.devextreme.formdemo'),
+          },
+        },
+        {
+          path: 'formDemo02',
+          name: 'formDemo02',
+          component: () => import('/@/views/demo/devextreme/formDemo02.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.formdemo02'),
           },
         },
       ],

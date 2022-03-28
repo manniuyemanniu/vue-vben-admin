@@ -204,6 +204,7 @@
       });
 
       const { getRowClassName } = useTableStyle(getProps, prefixCls);
+      // console.log('getRowClassName', getRowClassName);
 
       const { getExpandOption, expandAll, expandRows, collapseAll } = useTableExpand(
         getProps,
@@ -268,6 +269,7 @@
           },
         ];
       });
+      // console.log('getWrapperClass', getWrapperClass);
 
       const getEmptyDataIsShowTable = computed(() => {
         const { emptyDataIsShowTable, useSearchForm } = unref(getProps);

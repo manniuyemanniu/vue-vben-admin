@@ -1,3 +1,302 @@
+import {
+  CellClickEvent,
+  CellDblClickEvent,
+  CellHoverChangedEvent,
+  CellPreparedEvent,
+  ContentReadyEvent,
+  ContextMenuPreparingEvent,
+  Editing,
+  EditingStartEvent,
+  EditorPreparedEvent,
+  EditorPreparingEvent,
+  ExportedEvent,
+  ExportingEvent,
+  FileSavingEvent,
+  FocusedCellChangedEvent,
+  FocusedCellChangingEvent,
+  FocusedRowChangedEvent,
+  FocusedRowChangingEvent,
+  RowClickEvent,
+  RowDblClickEvent,
+  RowPreparedEvent,
+} from 'devextreme/ui/data_grid';
+import { DataSourceLikes } from './datasource';
+
+/**
+ * 基本配置信息
+ */
+export interface dataGridPropsOptions extends dataGridMethodsOptions {
+  /**
+   *是否可以对列重新排序。
+   */
+  allowColumnReordering: boolean;
+  /**
+   * 是否可以调整列的大小。
+   */
+  allowColumnResizing: boolean;
+  /**
+   * 指定是否应缓存数据。
+   */
+  cacheEnabled: boolean;
+  /**
+   * 是否应根据内容调整其宽度。
+   */
+  columnAutoWidth: boolean;
+  /**
+   * 列固定设置为true时 列属性上的fix设置为true
+   */
+  columnFixing: ColumnFixing;
+  /**
+   * 是否应隐藏列以适应屏幕或容器大小。
+   */
+  columnHidingEnabled: boolean;
+  /**
+   * 最小的列宽度
+   * 默认值设置为100
+   */
+  columnMinWidth: number;
+  /**
+   * 调整列的大小
+   */
+  columnResizingMode: 'nextColumn' | 'widget';
+  /**
+   * 列信息
+   */
+  columns: any[];
+  /**
+   * 列宽
+   */
+  columnWidth: number | string;
+
+  /**
+   * 数据源
+   */
+  dataSource: DataSourceLikes;
+  // dataSource: { type: Object, default: [] },
+  /**
+   * 过滤行
+   */
+  filterRow: FilterRow;
+  /**
+   * 是否禁用
+   */
+  disabled: boolean;
+  /**
+   * 配置编辑。
+   */
+
+  // editing: {
+  //   type: Object as PropType<ColumnFixing>,
+  //   default: {
+  //     mode: 'row',
+  //     allowUpdating: true,
+  //     allowDeleting: true,
+  //     allowAdding: true,
+  //   },
+  // },
+  // 表格全局属性
+  elementAttr: object;
+
+  /**
+   * 配置滚动。 配置固定
+   */
+  scrolling: Scrolling;
+  /**
+   * 配置标题过滤器功能。
+   * 标题过滤器的弹出菜单列出所有列值。如果
+   * 它们是数字或日期，则可以使用列的
+   * headerFilter中的groupInterval属性对它们
+   * 进行分组。您还可以使用dataSource属性为标题
+   * 过滤器提供自定义数据源。
+   */
+  headerFilter: HeaderFilter;
+  /**
+   * 勾选框
+   *
+   */
+  selection: SelectionBase;
+  /**
+   * 是否取消勾选
+   */
+  isCloseEidtClearSelection: boolean;
+  /**
+   * 通知 DataGrid 服务器的数据处理操作。
+   */
+  remoteOperations: string | boolean | RemoteOperationsSetting;
+  /**
+   * 显示列线
+   */
+  showColumnLines: boolean;
+  /**
+   * 显示边框
+   */
+  showBorders: boolean;
+  /**
+   * 显示行线
+   */
+  showRowLines: boolean;
+  /**
+   * 组件是否可见
+   */
+  visible: boolean;
+  /**
+   * 宽度
+   */
+  width: number | string;
+  /**
+   * 分页
+   */
+  pager: Pager;
+  /**
+   * 分页信息
+   */
+  paging: Paging;
+
+  dataGridRefKey: string;
+  // type: [Number, String, Function] as PropType<
+  //   number | string | PropType<(...arg: any[]) => Promise<number | string>>
+  // >,
+  /**
+   * @deprecated
+   * 高度属性暂不传递，是否全屏后会存在问题
+   */
+  height: number | string;
+
+  //#region 【自定义Props】
+  /**
+   * 自定义编辑是否启用
+   */
+  customizeEnableEditing: boolean;
+  /**
+   * 自定义编辑模式
+   * type:'batch' | 'cell' | 'row' | 'form' | 'popup'
+   */
+  customizeEditingMode: 'popup' | 'form';
+  /**
+   * 自定义编辑事件属性
+   */
+  customizeEditing: CustomizeEditing;
+
+  //#endregion
+}
+
+/**
+ * DataGrid原生Methods方法
+ */
+export interface dataGridMethodsOptions extends dataGridCustomizeMethods {
+  /**
+   * 单元格单击事件
+   */
+  onCellClick?: (e: CellClickEvent) => void;
+  /**
+   *双击或双击单元格时执行的功能。 在 onRowDblClick 之前执行。
+   */
+  onCellDblClick?: (e: CellDblClickEvent) => void;
+  /**
+   * 在指针进入或离开单元格后执行的函数。
+   */
+  onCellHoverChanged?: (e: CellHoverChangedEvent) => void;
+  /**
+   * 创建网格单元后执行的函数。
+   */
+  onCellPrepared?: (e: CellPreparedEvent) => void;
+  /**
+   * 渲染完成后事件
+   */
+  onContentReady: (e: ContentReadyEvent) => void;
+  /**
+   * 在呈现上下文菜单之前执行的功能。
+   */
+  onContextMenuPreparing?: (e: ContextMenuPreparingEvent) => void;
+  /**
+   * 在单元格或行切换到编辑状态之前执行的功能
+   */
+  onEditingStart?: (e: EditingStartEvent) => void;
+  /**
+   * 创建编辑器后执行的函数。不为具有 editCellTemplate 的单元格执行。
+   */
+  onEditorPrepared?: (options: EditorPreparedEvent) => void;
+  /**
+   * 用于自定义单元格编辑器的功能。不为具有 editCellTemplate 的单元格执行。
+   */
+  onEditorPreparing?: (e: EditorPreparingEvent) => void;
+  /**
+   * 导出数据后执行的函数。
+   */
+  onExported?: (e: ExportedEvent) => void;
+  /**
+   * 在导出数据之前执行的函数。
+   */
+  onExporting?: (e: ExportingEvent) => void;
+  /**
+   * 在将具有导出数据的文件保存到用户的本地存储之前执行的功能。
+   */
+  onFileSaving?: (e: FileSavingEvent) => void;
+  /**
+   * 在焦点单元格更改后执行的函数。 仅适用于数据行或组行中的单元格。
+   */
+  onFocusedCellChanged?: (e: FocusedCellChangedEvent) => void;
+  /**
+   *在焦点单元格更改之前执行的函数。 仅适用于数据行或组行中的单元格。
+   */
+  onFocusedCellChanging?: (e: FocusedCellChangingEvent) => void;
+  /**
+   * 在焦点行更改后执行的函数。 仅适用于数据或组行。 集中行启用应该是真的。
+   */
+  onFocusedRowChanged?: (e: FocusedRowChangedEvent) => void;
+  /**
+   * 在焦点行更改之前执行的函数。 仅适用于数据或组行。 集中行启用应该是真的。
+   */
+  onFocusedRowChanging?: (e: FocusedRowChangingEvent) => void;
+  /**
+   * 单击或点击行时执行的功能。
+   */
+  onRowClick?: (e: RowClickEvent) => void;
+  /**
+   * 双击或双击行时执行的功能。 在 onCellDblClick 之后执行。
+   */
+  onRowDblClick?: (e: RowDblClickEvent) => void;
+  /**
+   * 创建行后执行的函数。
+   */
+  onRowPrepared?: (e: RowPreparedEvent) => void;
+
+  onInitialized?: (e: any) => void;
+}
+
+/**
+ * DataGrid自定义Methods方法
+ */
+export interface dataGridCustomizeMethods {
+  customizeContentReady: (e: ContentReadyEvent) => void;
+}
+
+/**
+ * 按钮点击事件配置信息
+ */
+export interface dataGridActionOptions {
+  /**
+   *
+   */
+  setProps: (props: Partial<dataGridPropsOptions>) => Promise<void>;
+  /**
+   * 获取初始化信息
+   */
+  instance: () => any;
+  /**
+   * 获取选中的网格信息
+   */
+  getSelectedRowsData: () => Promise<Array<any>>; //| Promise<Array<any>>;
+
+  // emit?: EmitType;
+}
+
+export type RegisterFn = (formInstance: dataGridActionOptions) => void;
+
+export type UseDataGridReturnType = [RegisterFn, dataGridActionOptions];
+
+//#region 【DataGrid基本配置】
+
 export interface ColumnFixing {
   /**
    * Enables column fixing.
@@ -33,8 +332,6 @@ export interface ColumnFixingTexts {
    */
   unfix?: string;
 }
-
-//#region 【配置过滤器行】
 
 /**
  * 配置过滤器行。
@@ -146,10 +443,6 @@ export interface FilterRowOperationDescriptions {
   startsWith?: string;
 }
 
-//endregion
-
-//#region [标题过滤]
-
 /**
  * 配置标题过滤器功能。
  * 标题过滤器的弹出菜单列出所有列值。如果
@@ -213,10 +506,9 @@ export interface HeaderFilterTexts {
   ok?: string;
 }
 
-//endregion
-
-//#region 【滑动属性】
-
+/**
+ * 滚动条
+ */
 export interface Scrolling {
   /**
    * Specifies the scrolling mode.
@@ -302,9 +594,6 @@ export interface Scrolling {
   renderAsync?: boolean;
 }
 
-//#endregion
-
-//#region
 export interface SelectionBase {
   /**
    * Makes selection deferred.
@@ -334,7 +623,6 @@ export interface SelectionBase {
    */
   mode?: 'multiple' | 'none' | 'single';
 }
-//#endregion
 
 export interface RemoteOperationsSetting {
   /**
@@ -421,3 +709,13 @@ export interface Paging {
    */
   pageSize?: number;
 }
+
+//#region 【datagrid编辑事件】
+/**
+ * 直接使用
+ */
+export type CustomizeEditing = Editing;
+
+//#endregion
+
+//#endregion

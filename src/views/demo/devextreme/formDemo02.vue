@@ -3,8 +3,8 @@
   <div class="p-0">
     <PageWrapper title="devextreme-from">
       <CollapseContainer title="devextreme-from表单示例">
-        <!-- <DevExtremeForm :schemas="schemas" :formData="formData" /> -->
-        <DevExtremeForm @register="register" />
+        <DevExtremeForm ref="dxFormRef" :schemas="schemas" :formData="formData" />
+        <!-- <DevExtremeForm @register="register" /> -->
       </CollapseContainer>
 
       <template #rightFooter>
@@ -17,13 +17,13 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref, unref } from 'vue';
   import { CollapseContainer } from '/@/components/Container';
   import { PageWrapper } from '/@/components/Page';
   import {
     DevExtremeForm,
+    dxFormActionType,
     dxFormItemOption,
-    useDxForm,
   } from '/@/components/devextreme/devextreme-form/index';
 
   import DxButton from 'devextreme-vue/button';
@@ -165,22 +165,28 @@
         Skype:
           'John has been in the Audio/Video industry since 1990. He has led DevAV as its CEO since 2003.\r\nWhen not working hard as the CEO, John loves to golf and bowl. He once bowled a perfect game of 300.',
       };
-      const [register, { instance, customizeValidate }] = useDxForm({
-        formData: formData,
-        schemas: schemas,
-      });
+
+      const dxFormRef = ref<Nullable<dxFormActionType>>(null);
+      function getDxFormAction() {
+        const dxFormAction = unref(dxFormRef);
+        if (!dxFormAction) {
+          throw new Error('tableAction is null');
+        }
+        return dxFormAction;
+      }
+
       const onClickinstance = async () => {
-        const result = await instance();
+        const result = await getDxFormAction().instance();
         console.log('onClickinstance', result);
       };
       const onClickvalidate = async () => {
-        const result = await customizeValidate();
+        const result = await getDxFormAction().customizeValidate();
 
         console.log('onClickvalidate', result);
         console.log('onClickvalidate', formData);
       };
 
-      return { register, onClickinstance, onClickvalidate };
+      return { schemas, formData, dxFormRef, onClickinstance, onClickvalidate };
     },
   });
 </script>
