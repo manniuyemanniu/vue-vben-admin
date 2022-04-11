@@ -6,6 +6,10 @@ import { setHtmlPageLang, setLoadLocalePool } from './helper';
 import { localeSetting } from '/@/settings/localeSetting';
 import { useLocaleStoreWithOut } from '/@/store/modules/locale';
 
+// import deMessages from 'devextreme/localization/messages/de.json';
+// import ruMessages from 'devextreme/localization/messages/ru.json';
+import { locale as dxLocal, loadMessages } from 'devextreme/localization';
+
 const { fallback, availableLocales } = localeSetting;
 
 export let i18n: ReturnType<typeof createI18n>;
@@ -20,6 +24,27 @@ async function createI18nOptions(): Promise<I18nOptions> {
   setLoadLocalePool((loadLocalePool) => {
     loadLocalePool.push(locale);
   });
+
+  //#region 【处理devextreme语言】
+  /**
+   * 想使用动态引用的方法，
+   * @rollup/plugin-dynamic-import-vars改包只支持path 前含'./ or ../'开头 无法支撑
+   */
+  switch (locale) {
+    case 'zh_CN': {
+      const dxMessage = await import('devextreme/localization/messages/zh.json');
+      loadMessages(dxMessage);
+      dxLocal(navigator.language);
+      break;
+    }
+    case 'en': {
+      const dxMessage = await import('devextreme/localization/messages/en.json');
+      loadMessages(dxMessage);
+      dxLocal(navigator.language);
+      break;
+    }
+  }
+  //#endregionion
 
   return {
     legacy: false,

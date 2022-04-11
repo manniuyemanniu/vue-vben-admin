@@ -165,7 +165,7 @@
         title: '可编辑单元格示例',
         api: demoListApi,
         columns: columns,
-        showIndexColumn: false,
+        showIndexColumn: true,
         bordered: true,
       });
 

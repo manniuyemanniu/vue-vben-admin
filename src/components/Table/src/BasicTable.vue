@@ -96,6 +96,7 @@
       'columns-change',
     ],
     setup(props, { attrs, emit, slots, expose }) {
+      console.log('slots', slots);
       const tableElRef = ref(null);
       const tableData = ref<Recordable[]>([]);
 
@@ -182,6 +183,11 @@
         getColumnsRef,
         getCacheColumns,
       } = useColumns(getProps, getPaginationInfo);
+
+      console.log('useColumns=>getColumns', getColumns);
+      console.log('useColumns=>setColumns', setColumns);
+      console.log('useColumns=>getViewColumns', getViewColumns.value);
+      console.log('useColumns=>getColumnsRef', getColumnsRef.value);
 
       const { getScrollRef, redoHeight } = useTableScroll(
         getProps,

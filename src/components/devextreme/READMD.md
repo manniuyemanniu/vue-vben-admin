@@ -1,4 +1,4 @@
-# 封装 devextreme-vue 组件
+# 封装 devextreme-vue [DataGrid] 组件
 
 ## 组件目录详解
 

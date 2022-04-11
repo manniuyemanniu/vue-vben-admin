@@ -37,7 +37,7 @@ const comp: AppRouteModule = {
         {
           path: 'basic',
           name: 'datagriddemo',
-          component: () => import('/@/views/demo/devextreme/datagriddemo.vue'),
+          component: () => import('/@/views/demo/devextreme/datagrid/datagriddemo.vue'),
           meta: {
             title: t('routes.demo.devextreme.datagriddemo'),
           },
@@ -45,7 +45,7 @@ const comp: AppRouteModule = {
         {
           path: 'dataGridDemo02',
           name: 'dataGridDemo02',
-          component: () => import('/@/views/demo/devextreme/dataGridDemo02.vue'),
+          component: () => import('/@/views/demo/devextreme/datagrid/dataGridDemo02.vue'),
           meta: {
             title: t('routes.demo.devextreme.dataGridDemo02'),
           },
@@ -53,15 +53,39 @@ const comp: AppRouteModule = {
         {
           path: 'dataGridDemo03',
           name: 'dataGridDemo03',
-          component: () => import('/@/views/demo/devextreme/dataGridDemo03.vue'),
+          component: () => import('/@/views/demo/devextreme/datagrid/dataGridDemo03.vue'),
           meta: {
             title: t('routes.demo.devextreme.dataGridDemo03'),
           },
         },
         {
+          path: 'RowEditDataGridDemo',
+          name: 'RowEditDataGridDemo',
+          component: () => import('/@/views/demo/devextreme/datagrid/RowEditDataGridDemo.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.rowEditDataGrid'),
+          },
+        },
+        {
+          path: 'CellEditDataGridDemo',
+          name: 'CellEditDataGridDemo',
+          component: () => import('/@/views/demo/devextreme/datagrid/CellEditDataGridDemo.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.cellEditDataGrid'),
+          },
+        },
+        {
+          path: 'CustomDataGridDemo',
+          name: 'CustomDataGridDemo',
+          component: () => import('/@/views/demo/devextreme/datagrid/CustomDataGridDemo.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.customEditDataGrid'),
+          },
+        },
+        {
           path: 'form',
           name: 'formdemo',
-          component: () => import('/@/views/demo/devextreme/formdemo.vue'),
+          component: () => import('/@/views/demo/devextreme/form/formdemo.vue'),
           meta: {
             title: t('routes.demo.devextreme.formdemo'),
           },
@@ -69,9 +93,17 @@ const comp: AppRouteModule = {
         {
           path: 'formDemo02',
           name: 'formDemo02',
-          component: () => import('/@/views/demo/devextreme/formDemo02.vue'),
+          component: () => import('/@/views/demo/devextreme/form/formDemo02.vue'),
           meta: {
             title: t('routes.demo.devextreme.formdemo02'),
+          },
+        },
+        {
+          path: 'datagrid_form',
+          name: 'datagrid_form',
+          component: () => import('/@/views/demo/devextreme/datagrid_form/index.vue'),
+          meta: {
+            title: t('routes.demo.devextreme.datagrid_form'),
           },
         },
       ],

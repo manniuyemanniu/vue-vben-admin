@@ -140,7 +140,7 @@
           },
           {
             typeOption: 'simple',
-            colSpan: 4,
+            colSpan: 2,
             dataField: 'Skype',
             editorType: 'dxTextArea',
           },

@@ -1,8 +1,9 @@
 <!-- 顶部Button按钮组 -->
 <template>
-  <div class="button-wapper">
+  <div res="wrapRef" :class="getButtonListClass">
     <template v-for="item in buttons" :key="item.tabIndex">
       <DevExtremeButton
+        class="mr-2 mb-1"
         :text="item.text"
         :disabled="item.disabled"
         :elementAttr="item.elementAttr"
@@ -19,9 +20,10 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { computed, defineComponent, ref } from 'vue';
   import { DevextremeButtonSchema } from './types/devextreme-button';
   import DevExtremeButton from './components/DevExtremeButton.vue';
+  import { useDesign } from '/@/hooks/web/useDesign';
   export default defineComponent({
     name: 'DevExtremeButtonList',
     components: { DevExtremeButton },
@@ -29,13 +31,20 @@
       buttons: { type: [Array] as PropType<DevextremeButtonSchema[]>, default: () => [] },
     },
     setup() {
-      return {};
+      const wrapRef = ref(null);
+
+      const { prefixCls } = useDesign('devextreme-button-list');
+
+      const getButtonListClass = computed(() => {
+        return [prefixCls];
+      });
+      return { wrapRef, getButtonListClass };
     },
   });
 </script>
 
 <style lang="less">
-  @prefix-cls: ~'@{namespace}-devextreme-button';
+  @prefix-cls: ~'@{namespace}-devextreme-button-list';
 
   .@{prefix-cls} {
     .button-wapper {

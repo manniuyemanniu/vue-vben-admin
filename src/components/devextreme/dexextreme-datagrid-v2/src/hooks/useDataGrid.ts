@@ -19,7 +19,7 @@ export function useDataGrid(dataGridProps: Props): UseDataGridReturnType {
     const table = unref(dataGridRef);
     if (!table) {
       error(
-        'The table instance has not been obtained yet, please make sure the table is presented when performing the table operation!',
+        'The DataGrid instance has not been obtained yet, please make sure the DataGrid is presented when performing the table operation!',
       );
     }
     await nextTick();
@@ -59,15 +59,52 @@ export function useDataGrid(dataGridProps: Props): UseDataGridReturnType {
       const dataGrid = await getDataGrid();
       return dataGrid.instance();
     },
+    /**
+     * 获取选中数据源
+     * @returns
+     */
     getSelectedRowsData: async (): Promise<Array<any>> => {
       // const dataGrid = getDataGrid();
       // return dataGrid.getSelectedRowsData();
 
-      const form = await getDataGrid();
+      const dataGrid = await getDataGrid();
       return new Promise((resolve) => {
-        const result = form.getSelectedRowsData();
+        const result = dataGrid.getSelectedRowsData();
         resolve(result);
       });
+    },
+    /**
+     * 导出全部
+     */
+    customExportAll: async (): Promise<void> => {
+      const dataGrid = await getDataGrid();
+      dataGrid.customExportAll();
+    },
+    /**
+     * 导出选中行
+     */
+    customExportSelect: async (): Promise<void> => {
+      const dataGrid = await getDataGrid();
+      dataGrid.customExportSelect();
+    },
+    /**
+     * 导出当前页
+     */
+    customExportPage: async (): Promise<void> => {
+      const dataGrid = await getDataGrid();
+      dataGrid.customExportPage();
+    },
+    /**
+     * 清除筛选
+     */
+    clearFilter: async (): Promise<void> => {
+      const dataGrid = await getDataGrid();
+      dataGrid.clearFilter();
+    },
+
+    showColumnChooser: async (): Promise<void> => {
+      const dataGrid = await getDataGrid();
+      dataGrid.showColumnChooser;
     },
   };
 

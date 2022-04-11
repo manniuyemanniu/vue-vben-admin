@@ -3,6 +3,7 @@ import {
   CellDblClickEvent,
   CellHoverChangedEvent,
   CellPreparedEvent,
+  Column,
   ContentReadyEvent,
   ContextMenuPreparingEvent,
   Editing,
@@ -26,6 +27,11 @@ import { DataSourceLikes } from './datasource';
  * 基本配置信息
  */
 export interface dataGridPropsOptions extends dataGridMethodsOptions {
+  /**
+   * 指定提供键值以访问数据项的键属性（或多个属性）。
+   * 每个键值必须是唯一的。此属性仅适用于 data 是简单数组的情况。
+   */
+  keyExpr: string;
   /**
    *是否可以对列重新排序。
    */
@@ -60,9 +66,14 @@ export interface dataGridPropsOptions extends dataGridMethodsOptions {
    */
   columnResizingMode: 'nextColumn' | 'widget';
   /**
-   * 列信息
+   * 是否显示序号列
    */
-  columns: any[];
+  showIndexColumn: boolean;
+  /**
+   * 自定义列信息
+   */
+  // columns: any[];
+  customColumn: Array<CustomizeColumns>;
   /**
    * 列宽
    */
@@ -157,7 +168,7 @@ export interface dataGridPropsOptions extends dataGridMethodsOptions {
   //   number | string | PropType<(...arg: any[]) => Promise<number | string>>
   // >,
   /**
-   * @deprecated
+  //  * @deprecated
    * 高度属性暂不传递，是否全屏后会存在问题
    */
   height: number | string;
@@ -171,12 +182,23 @@ export interface dataGridPropsOptions extends dataGridMethodsOptions {
    * 自定义编辑模式
    * type:'batch' | 'cell' | 'row' | 'form' | 'popup'
    */
-  customizeEditingMode: 'popup' | 'form';
+  customizeEditingMode: 'batch' | 'cell' | 'row' | 'form' | 'popup';
   /**
    * 自定义编辑事件属性
    */
   customizeEditing: CustomizeEditing;
 
+  //#endregion
+
+  //#region 【Toolbar工具栏按钮设置】
+  toolbarButtonSchema: Array<ToolbarButtonSchema>;
+  //#endregion
+
+  //#region 【export导出配置】
+  /**
+   * 导出文件名
+   */
+  exportFileName: string;
   //#endregion
 }
 
@@ -269,6 +291,8 @@ export interface dataGridMethodsOptions extends dataGridCustomizeMethods {
  */
 export interface dataGridCustomizeMethods {
   customizeContentReady: (e: ContentReadyEvent) => void;
+
+  openModalOrDrawer: <T = any>(props?: boolean, data?: T, openOnSet?: boolean) => void;
 }
 
 /**
@@ -287,7 +311,26 @@ export interface dataGridActionOptions {
    * 获取选中的网格信息
    */
   getSelectedRowsData: () => Promise<Array<any>>; //| Promise<Array<any>>;
-
+  /**
+   * 导出所有数据源
+   */
+  customExportAll: () => void;
+  /**
+   * 导出选中数据信息
+   */
+  customExportSelect: () => void;
+  /**
+   * 导出当前页数据信息
+   */
+  customExportPage: () => void;
+  /**
+   * 清除过滤器
+   */
+  clearFilter: () => void;
+  /**
+   * 列选择器
+   */
+  showColumnChooser: () => void;
   // emit?: EmitType;
 }
 
@@ -297,6 +340,7 @@ export type UseDataGridReturnType = [RegisterFn, dataGridActionOptions];
 
 //#region 【DataGrid基本配置】
 
+//#region 【】
 export interface ColumnFixing {
   /**
    * Enables column fixing.
@@ -333,6 +377,9 @@ export interface ColumnFixingTexts {
   unfix?: string;
 }
 
+//#endregion
+
+//#region 【过滤行】
 /**
  * 配置过滤器行。
  * */
@@ -443,6 +490,10 @@ export interface FilterRowOperationDescriptions {
   startsWith?: string;
 }
 
+//#endregion
+
+//#region 【头部过滤】
+
 /**
  * 配置标题过滤器功能。
  * 标题过滤器的弹出菜单列出所有列值。如果
@@ -506,6 +557,9 @@ export interface HeaderFilterTexts {
   ok?: string;
 }
 
+//#endregion
+
+//#region 【滚动条】
 /**
  * 滚动条
  */
@@ -624,6 +678,8 @@ export interface SelectionBase {
   mode?: 'multiple' | 'none' | 'single';
 }
 
+//#endregion
+
 export interface RemoteOperationsSetting {
   /**
    * Specifies whether or not filtering must be performed on the server side.
@@ -651,6 +707,7 @@ export interface RemoteOperationsSetting {
   summary?: boolean;
 }
 
+//#region  【Page分页】
 /**
  * 分页配置
  */
@@ -710,6 +767,8 @@ export interface Paging {
   pageSize?: number;
 }
 
+//#endregion
+
 //#region 【datagrid编辑事件】
 /**
  * 直接使用
@@ -718,4 +777,62 @@ export type CustomizeEditing = Editing;
 
 //#endregion
 
+//#region 【列配置信息】
+
+export type CustomizeColumns = Column & { flag?: string };
+
+//#endregion
+
+//#region 【Toolbar工具栏】
+/**
+ * Toolbar工具栏按钮设置
+ */
+export interface ToolbarButtonSchema {
+  // 是否禁用
+  disabled?: boolean;
+  // 元素属性
+  elementAttr?: any;
+  // 图标
+  icon?: string;
+  //造型模式
+  stylingMode?: 'text' | 'outlined' | 'contained';
+  //标签索引
+  tabIndex?: number;
+  //按钮文本
+  text: string;
+  //按钮类型
+  type?: 'back' | 'danger' | 'default' | 'normal' | 'success';
+  //点击事件
+  onClick?: Function;
+  //是否显示
+  visible?: boolean;
+  //显示位置
+  location?: 'after' | 'before' | 'center';
+  //按钮类型
+  onClickType: clickType;
+}
+
+/**
+ * 按钮点击类型
+ */
+export enum clickType {
+  createClick = 'createClick', //创建事件
+  editClick = 'editClick', //编辑事件
+  delClick = 'delClick', //删除事件
+  exportAllClick = 'exportAllClick', //导出全部事件
+  exportSelectClick = 'exportSelectClick', //导出选中事件
+  exportPageClick = 'exportPageClick', //导出当前页事件
+  clearFilterClick = 'clearFilterClick', //清除筛选器事件
+  showColumnChooserClick = 'showColumnChooserClick', //列选择器事件
+  importClick = 'importClick',
+  orderClick = 'orderClick', //其他按钮事件,当传入的function为undefined时没有默认的function方法
+}
+
+export interface ToolbarDropDownButtonSchema {
+  //按钮文本
+  text: string;
+  // 图标
+  icon?: string;
+}
+//#endregion
 //#endregion

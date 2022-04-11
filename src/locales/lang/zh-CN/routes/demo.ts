@@ -1,12 +1,29 @@
 export default {
   devextreme: {
     devextreme: 'devextreme',
-    datagriddemo: 'datagrid示例',
-    dataGridDemo02: 'datagrid示例02',
-    dataGridDemo03: 'datagrid示例03',
+    datagriddemo: '网格v1示例',
+    dataGridDemo02: '网格v2示例01',
+    dataGridDemo03: '网格v2示例02',
+    rowEditDataGrid: 'ROW网格编辑',
+    cellEditDataGrid: 'CELL网格编辑',
+    customEditDataGrid: 'CUSTOM网格编辑',
     formdemo: '表单示例',
     formdemo02: '表单示例02',
+    datagrid_form: '网格+表单编辑',
     report: '打印报告',
+
+    dataGrid: {
+      add: '新增',
+      create: '创建',
+      edit: '编辑',
+      del: '删除',
+      export: '导出',
+      exportAll: '导出所有',
+      exportSelect: '导出选中',
+      exportPage: '导出当前页',
+      clearFilter: '清除筛选',
+      columnChooser: '列设置',
+    },
   },
   charts: {
     baiduMap: '百度地图',

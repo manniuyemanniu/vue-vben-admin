@@ -11,12 +11,20 @@ import {
   Scrolling,
   SelectionBase,
   CustomizeEditing,
+  CustomizeColumns,
+  ToolbarButtonSchema,
 } from './types/datagrid';
+// import { t } from '/@/hooks/web/useI18n';
 
 /**
  * devextreme表单基本Props
  */
 export const datagridProps = {
+  /**
+   * 指定提供键值以访问数据项的键属性（或多个属性）。
+   * 每个键值必须是唯一的。此属性仅适用于 data 是简单数组的情况。
+   */
+  keyExpr: { type: String, default: undefined },
   /**
    *是否可以对列重新排序。
    */
@@ -57,10 +65,15 @@ export const datagridProps = {
    */
   columnResizingMode: propTypes.oneOf(['nextColumn', 'widget']).def('nextColumn'),
   /**
+   * 是否显示序号列
+   */
+  showIndexColumn: propTypes.bool.def(true),
+  /**
    * 列信息
    */
-  columns: {
-    type: [Array] as PropType<any[]>,
+  // columns: {
+  customColumn: {
+    type: [Array] as PropType<Array<CustomizeColumns>>,
     default: () => [],
   },
   /**
@@ -73,23 +86,7 @@ export const datagridProps = {
    */
   dataSource: { type: Object as PropType<DataSourceLikes>, default: [] },
   // dataSource: { type: Object, default: [] },
-  /**
-   * 过滤行
-   */
-  filterRow: {
-    type: Object as PropType<FilterRow>,
-    default: {
-      applyFilter: 'auto', // 指定何时应用过滤器。
-      applyFilterText: 'Apply filter', // 指定当用户在应用过滤器的按钮上暂停时显示的提示文本。
-      betweenEndText: 'End', // 为编辑器指定一个占位符，该占位符在用户选择“介于”过滤器操作时指定范围的结尾。 默认值|ENd
-      betweenStartText: 'Start', // 为编辑器指定一个占位符，该占位符在用户选择“介于”过滤器操作时指定范围的开始。 默认值|Start
-      operationDescriptions: {},
-      resetOperationText: 'Reset', // 在过滤器列表上指定用于重置操作的文本。
-      showAllText: '(All)', // 为清除已应用的过滤器的项目指定文本。仅在过滤器行的单元格包含选择框时使用。
-      showOperationChooser: true, // 指定打开过滤器列表的图标是否可见。
-      visible: true, // 指定过滤器行是否可见。
-    },
-  },
+
   /**
    * 是否禁用
    */
@@ -112,6 +109,25 @@ export const datagridProps = {
    */
   elementAttr: { type: Object, default: {} },
 
+  //#region  【过滤行|配置滚动。标题过滤器】
+
+  /**
+   * 过滤行
+   */
+  filterRow: {
+    type: Object as PropType<FilterRow>,
+    default: {
+      applyFilter: 'auto', // 指定何时应用过滤器。
+      applyFilterText: 'Apply filter', // 指定当用户在应用过滤器的按钮上暂停时显示的提示文本。
+      betweenEndText: 'End', // 为编辑器指定一个占位符，该占位符在用户选择“介于”过滤器操作时指定范围的结尾。 默认值|ENd
+      betweenStartText: 'Start', // 为编辑器指定一个占位符，该占位符在用户选择“介于”过滤器操作时指定范围的开始。 默认值|Start
+      operationDescriptions: {},
+      resetOperationText: 'Reset', // 在过滤器列表上指定用于重置操作的文本。
+      showAllText: '(All)', // 为清除已应用的过滤器的项目指定文本。仅在过滤器行的单元格包含选择框时使用。
+      showOperationChooser: true, // 指定打开过滤器列表的图标是否可见。
+      visible: true, // 指定过滤器行是否可见。
+    },
+  },
   /**
    * 配置滚动。 配置固定
    */
@@ -191,11 +207,11 @@ export const datagridProps = {
       allowSearch: false,
       height: 352,
       searchTimeout: 500,
-      texts: {
-        cancel: '取消',
-        emptyValue: '',
-        ok: '确认',
-      },
+      // texts: {
+      //   cancel: t(''),
+      //   emptyValue: '',
+      //   ok: t(''),
+      // },
       visible: true,
       width: 252,
     },
@@ -214,6 +230,8 @@ export const datagridProps = {
       showCheckBoxesMode: 'always',
     },
   },
+
+  //#endregion
   /**
    * 取消编辑勾选
    * 分页、查询、筛选、刷新后清空选中
@@ -241,6 +259,10 @@ export const datagridProps = {
    */
   showBorders: propTypes.bool.def(true),
   /**
+   * 斑马纹
+   */
+  rowAlternationEnabled: propTypes.bool.def(true),
+  /**
    * 组件是否可见
    */
   visible: propTypes.bool.def(true),
@@ -254,6 +276,8 @@ export const datagridProps = {
     type: [Number, String] as PropType<number | string>,
     default: undefined,
   },
+
+  //#region 【分页信息】
   /**
    * 分页
    */
@@ -261,7 +285,7 @@ export const datagridProps = {
     type: Object as PropType<Pager>,
     default: {
       allowedPageSizes: [20, 50, 100, 200, 500],
-      infoText: '第 {0} 页,共 {1} 页(共 {2} 个项目)',
+      // infoText: t(''),
       /**
        * 指定是否显示页面信息。
        * 类型： 布尔型
@@ -288,6 +312,8 @@ export const datagridProps = {
     },
   },
 
+  //#endregion
+
   // type: [Number, String, Function] as PropType<
   //   number | string | PropType<(...arg: any[]) => Promise<number | string>>
   // >,
@@ -306,11 +332,34 @@ export const datagridProps = {
    * 自定义编辑模式
    * type:'batch' | 'cell' | 'row' | 'form' | 'popup'
    */
-  customizeEditingMode: propTypes.oneOf(['popup', 'form']).def('popup'),
+  customizeEditingMode: propTypes.oneOf(['batch', 'cell', 'row', 'form', 'popup']).def('row'),
   /**
    * 自定义编辑事件属性
    */
-  customizeEditing: { type: Object as PropType<CustomizeEditing>, default: {} },
+  customizeEditing: { type: Object as PropType<CustomizeEditing> },
 
+  //#endregion
+
+  //#region 【Toolbar工具栏-按钮】
+
+  toolbarButtonSchema: { type: Array as PropType<Array<ToolbarButtonSchema>>, default: [] },
+
+  //#endregion
+
+  //#region 【export导出配置】
+  /**
+   * 导出文件名
+   */
+  exportFileName: { type: String, default: '' },
+  //#endregion
+
+  //#region 【打开抽屉与弹窗】
+
+  /**
+   * 给子界面打开事件
+   */
+  openModalOrDrawer: {
+    type: Function as PropType<<T = any>(props?: boolean, data?: T, openOnSet?: boolean) => void>,
+  },
   //#endregion
 };

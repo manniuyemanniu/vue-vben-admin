@@ -4,7 +4,7 @@
     <div class="content-block dx-card responsive-paddings">
       <div class="p-4-wapper-button"> <DevExtremeButtonList :buttons="buttons" /></div>
       <div class="p-4-wapper-datagrid" ref="dataGridHelightRef">
-        <DevExtremeDataGrid
+        <DataGrid
           ref="dataGridRef"
           :dataSource="dataSource"
           :columns="columns"
@@ -19,11 +19,11 @@
 <script lang="ts">
   import { defineComponent, onMounted, ref, unref } from 'vue';
   import { DevextremeButtonSchema } from '/@/components/devextreme/devextreme-button/src/types/devextreme-button';
-  import DevExtremeDataGrid from '/@/components/devextreme/devextreme-datagrid/src/DevExtremeDataGrid.vue';
+  import { DataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/index';
   import DevExtremeButtonList from '/@/components/devextreme/devextreme-button/src/DevExtremeButtonList.vue';
   import CustomStore from 'devextreme/data/custom_store';
-  import { DataGridActionType } from '/@/components/devextreme/devextreme-datagrid/src/types/data-grid';
   import { RowDblClickEvent } from 'devextreme/ui/data_grid';
+  import { dataGridActionOptions } from '/@/components/devextreme/dexextreme-datagrid-v2/src/types/datagrid';
 
   function isNotEmpty(value) {
     return value !== undefined && value !== null && value !== '';
@@ -64,18 +64,18 @@
   });
 
   export default defineComponent({
-    name: 'DataGridDemo',
-    components: { DevExtremeDataGrid, DevExtremeButtonList },
+    name: 'DataGridDemo02',
+    components: { DataGrid, DevExtremeButtonList },
     setup() {
       const dataGridHelightRef = ref<HTMLElement | null>(null);
-      const dataGridRef = ref<Nullable<DataGridActionType>>(null);
+      const dataGridRef = ref<Nullable<dataGridActionOptions>>(null);
 
       function getTableAction() {
-        const tableAction = unref(dataGridRef);
-        if (!tableAction) {
-          throw new Error('tableAction is null');
+        const dataGridAction = unref(dataGridRef);
+        if (!dataGridAction) {
+          throw new Error('dataGridAction is null');
         }
-        return tableAction;
+        return dataGridAction;
       }
 
       /**
@@ -90,8 +90,8 @@
        *  获得选中事件
        */
       function getInstance() {
-        const data = getTableAction().getInstance();
-        console.log('getInstance', data);
+        const instance = getTableAction().instance();
+        console.log('getInstance', instance);
       }
       //#region 按钮
       // const AddDemo = () => {
@@ -101,7 +101,8 @@
       //   console.log('编辑');
       // };
       const DeleteDemo = () => {
-        (getTableAction().getInstance() as any).refresh();
+        const instance = getTableAction().instance();
+        instance.refresh();
       };
 
       const buttons: DevextremeButtonSchema[] = [
@@ -129,7 +130,6 @@
        * @param e
        */
       function onRowDblClick(e: RowDblClickEvent) {
-        debugger;
         console.log('onRowDblClick', e);
       }
 

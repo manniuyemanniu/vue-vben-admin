@@ -4,7 +4,7 @@
     <div class="content-block dx-card responsive-paddings">
       <div class="p-4-wapper-button"> <DevExtremeButtonList :buttons="buttons" /></div>
       <div class="p-4-wapper-datagrid" ref="dataGridHelightRef">
-        <EditDataGrid
+        <DevExtremeDataGrid
           ref="dataGridRef"
           :dataSource="dataSource"
           :columns="columns"
@@ -19,11 +19,11 @@
 <script lang="ts">
   import { defineComponent, onMounted, ref, unref } from 'vue';
   import { DevextremeButtonSchema } from '/@/components/devextreme/devextreme-button/src/types/devextreme-button';
-  import { EditDataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/index';
+  import DevExtremeDataGrid from '/@/components/devextreme/devextreme-datagrid/src/DevExtremeDataGrid.vue';
   import DevExtremeButtonList from '/@/components/devextreme/devextreme-button/src/DevExtremeButtonList.vue';
   import CustomStore from 'devextreme/data/custom_store';
+  import { DataGridActionType } from '/@/components/devextreme/devextreme-datagrid/src/types/data-grid';
   import { RowDblClickEvent } from 'devextreme/ui/data_grid';
-  import { dataGridActionOptions } from '/@/components/devextreme/dexextreme-datagrid-v2/src/types/datagrid';
 
   function isNotEmpty(value) {
     return value !== undefined && value !== null && value !== '';
@@ -64,11 +64,11 @@
   });
 
   export default defineComponent({
-    name: 'DataGridDemo02',
-    components: { EditDataGrid, DevExtremeButtonList },
+    name: 'DataGridDemo',
+    components: { DevExtremeDataGrid, DevExtremeButtonList },
     setup() {
       const dataGridHelightRef = ref<HTMLElement | null>(null);
-      const dataGridRef = ref<Nullable<dataGridActionOptions>>(null);
+      const dataGridRef = ref<Nullable<DataGridActionType>>(null);
 
       function getTableAction() {
         const tableAction = unref(dataGridRef);
@@ -90,8 +90,8 @@
        *  获得选中事件
        */
       function getInstance() {
-        const instance = getTableAction().instance();
-        console.log('getInstance', instance);
+        const data = getTableAction().getInstance();
+        console.log('getInstance', data);
       }
       //#region 按钮
       // const AddDemo = () => {
@@ -101,8 +101,7 @@
       //   console.log('编辑');
       // };
       const DeleteDemo = () => {
-        const instance = getTableAction().instance();
-        instance.refresh();
+        (getTableAction().getInstance() as any).refresh();
       };
 
       const buttons: DevextremeButtonSchema[] = [
@@ -130,7 +129,6 @@
        * @param e
        */
       function onRowDblClick(e: RowDblClickEvent) {
-        debugger;
         console.log('onRowDblClick', e);
       }
 

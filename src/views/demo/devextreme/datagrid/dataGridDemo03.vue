@@ -4,14 +4,14 @@
     <div class="content-block dx-card responsive-paddings">
       <div class="p-4-wapper-button"> <DevExtremeButtonList :buttons="buttons" /></div>
       <div class="p-4-wapper-datagrid" ref="dataGridHelightRef">
-        <!-- <EditDataGrid
+        <!-- <DataGrid
           ref="dataGridRef"
           :dataSource="dataSource"
           :columns="columns"
           :height="height"
           :onRowDblClick="onRowDblClick"
         /> -->
-        <EditDataGrid @register="register" />
+        <DataGrid @register="register" />
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 <script lang="ts">
   import { defineComponent, onMounted, ref } from 'vue';
   import { DevextremeButtonSchema } from '/@/components/devextreme/devextreme-button/src/types/devextreme-button';
-  import { EditDataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/index';
+  import { DataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/index';
   import DevExtremeButtonList from '/@/components/devextreme/devextreme-button/src/DevExtremeButtonList.vue';
   import CustomStore from 'devextreme/data/custom_store';
   import { RowDblClickEvent } from 'devextreme/ui/data_grid';
@@ -67,23 +67,23 @@
 
   export default defineComponent({
     name: 'DataGridDemo02',
-    components: { EditDataGrid, DevExtremeButtonList },
+    components: { DataGrid, DevExtremeButtonList },
     setup() {
       const dataGridHelightRef = ref<HTMLElement | null>(null);
       const dataGridRef = ref<Nullable<dataGridActionOptions>>(null);
       const dataSource = store;
-      const columns = [
-        'OrderNumber',
-        'OrderDate',
-        'StoreCity',
-        'StoreState',
-        'Employee',
-        'SaleAmount',
-      ];
+      // const columns = [
+      //   'OrderNumber',
+      //   'OrderDate',
+      //   'StoreCity',
+      //   'StoreState',
+      //   'Employee',
+      //   'SaleAmount',
+      // ];
 
       const [register, { instance, getSelectedRowsData }] = useDataGrid({
         dataSource: dataSource,
-        columns: columns,
+        // columns: columns,
       });
 
       /**
@@ -138,7 +138,6 @@
        * @param e
        */
       function onRowDblClick(e: RowDblClickEvent) {
-        debugger;
         console.log('onRowDblClick', e);
       }
 
@@ -161,7 +160,7 @@
         onContentReady,
         buttons,
         dataSource,
-        columns,
+        // columns,
         dataGridHelightRef,
         dataGridRef,
         height,
