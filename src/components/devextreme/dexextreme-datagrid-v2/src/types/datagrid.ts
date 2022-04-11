@@ -334,9 +334,9 @@ export interface dataGridActionOptions {
   // emit?: EmitType;
 }
 
-export type RegisterFn = (formInstance: dataGridActionOptions) => void;
+export type RegisterDxDataGridFn = (formInstance: dataGridActionOptions) => void;
 
-export type UseDataGridReturnType = [RegisterFn, dataGridActionOptions];
+export type UseDataGridReturnType = [RegisterDxDataGridFn, dataGridActionOptions];
 
 //#region 【DataGrid基本配置】
 

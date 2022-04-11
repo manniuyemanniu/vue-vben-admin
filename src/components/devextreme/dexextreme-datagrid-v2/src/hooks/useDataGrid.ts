@@ -50,6 +50,7 @@ export function useDataGrid(dataGridProps: Props): UseDataGridReturnType {
       },
     );
   }
+
   const methods: dataGridActionOptions = {
     setProps: async (props: Partial<dataGridPropsOptions>) => {
       const dataGrid = await getDataGrid();
@@ -102,6 +103,9 @@ export function useDataGrid(dataGridProps: Props): UseDataGridReturnType {
       dataGrid.clearFilter();
     },
 
+    /**
+     * 列选择器事件
+     */
     showColumnChooser: async (): Promise<void> => {
       const dataGrid = await getDataGrid();
       dataGrid.showColumnChooser;

@@ -20,20 +20,33 @@
       <DevExtremeForm @register="registerDxFrom" />
     </CollapseContainer>
 
-    <!-- footer底部栏按钮模块儿,insertFooter最左|默认取消|centerFooter按钮中|默认确认|appendFooter最右 -->
-    <!-- <template #insertFooter>
-      <a-button type="primary"> 保存</a-button>
-    </template>
-    <template #centerFooter>
-      <a-button type="primary"> 保存并继续</a-button>
-    </template>
-    <template #appendFooter>
-      <a-button type="primary"> 取消</a-button>
-    </template> -->
+    <CollapseContainer title="devextreme-datagrid网格示例" class="mt-4">
+      <EditCellDataGrid @register="registerDxDataGrid">
+        <!-- <template #StateIDCellTemplate="{ data }">
+            <span v-if="data.data.StateID === 5" style="text-decoration: line-through; color: red">
+              {{ data.data.StateID }}
+            </span>
+            <span v-else>{{ data.data.StateID }}</span>
+          </template> -->
+        <template #dropDownBoxEditor="{ data: cellInfo }">
+          <DropDownDataGrid
+            :value="cellInfo.value"
+            :rowIndex="cellInfo.rowIndex"
+            valueExpr="ID"
+            displayExpr="ID"
+            :searchExpr="searchExpr"
+            :on-value-changed="onValueChanged"
+            :customDataSource="employees"
+            :dropDownOptions="{ height: 500, width: 500 }"
+          />
+        </template>
+      </EditCellDataGrid>
+    </CollapseContainer>
   </BasicDrawer>
 </template>
 
 <script lang="ts">
+  import { createStore } from 'devextreme-aspnet-data-nojquery';
   import { defineComponent } from 'vue';
 
   import { CollapseContainer } from '/@/components/Container';
@@ -42,11 +55,26 @@
     useDxForm,
     DevExtremeForm,
   } from '/@/components/devextreme/devextreme-form';
+  import { useDataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/src/hooks/useDataGrid';
+  import {
+    CustomizeColumns,
+    EditCellDataGrid,
+  } from '/@/components/devextreme/dexextreme-datagrid-v2';
+
+  import { DropDownDataGrid } from '/@/components/devextreme/dexextreme-dropdown-datagrid';
   import { BasicDrawer } from '/@/components/Drawer';
+  import { isDef } from '/@/utils/is';
   export default defineComponent({
     name: 'CreateOrEditModal',
-    components: { BasicDrawer, DevExtremeForm, CollapseContainer },
+    components: {
+      BasicDrawer,
+      DevExtremeForm,
+      CollapseContainer,
+      DropDownDataGrid,
+      EditCellDataGrid,
+    },
     setup() {
+      //#region 【表单】
       const getSchemas = (): Array<dxFormItemOption> => {
         return [
           {
@@ -188,6 +216,70 @@
         formData: formData,
         schemas: schemas,
       });
+      //#endregion
+
+      //#region 【网格】
+      const url = 'https://js.devexpress.com/Demos/Mvc/api/CustomEditors';
+
+      const employees = createStore({
+        key: 'ID',
+        loadUrl: `${url}/Employees`,
+        onBeforeSend(_method, ajaxOptions) {
+          ajaxOptions.xhrFields = { withCredentials: true };
+        },
+      });
+
+      const tasks = createStore({
+        key: 'ID',
+        loadUrl: `${url}/Tasks`,
+        updateUrl: `${url}/UpdateTask`,
+        insertUrl: `${url}/InsertTask`,
+        onBeforeSend(_method, ajaxOptions) {
+          ajaxOptions.xhrFields = { withCredentials: true };
+        },
+      });
+
+      const columns: Array<CustomizeColumns> = [
+        {
+          dataField: 'Owner',
+          caption: 'Owner',
+          dataType: 'number',
+          editCellTemplate: 'dropDownBoxEditor',
+        },
+        {
+          dataField: 'Priority',
+          caption: 'Priority',
+          dataType: 'number',
+        },
+        {
+          dataField: 'Status',
+          caption: 'Status',
+          dataType: 'number',
+        },
+        {
+          dataField: 'Subject',
+          caption: 'Subject',
+          dataType: 'string',
+        },
+      ];
+      const onValueChanged = async (index, data) => {
+        console.log('index', index);
+        console.log('data', data);
+        let dataGrid = await instanceDxDataGrid();
+        if (isDef(data)) {
+          dataGrid.cellValue(index, 'Owner', data.ID);
+        }
+      };
+      const searchExpr = ['ID'];
+      const [registerDxDataGrid, { instance: instanceDxDataGrid }] = useDataGrid({
+        dataSource: tasks,
+        customColumn: columns,
+        customizeEnableEditing: true,
+        height: 800,
+        customizeEditingMode: 'row',
+      });
+
+      //#endregion
 
       //#region 【按钮事件】
 
@@ -198,7 +290,16 @@
 
       //#endregion
 
-      return { registerDxFrom, dxFromInstance, dxFormCustomizeValidate, handleSubmit };
+      return {
+        registerDxFrom,
+        dxFromInstance,
+        dxFormCustomizeValidate,
+        handleSubmit,
+        registerDxDataGrid,
+        employees,
+        searchExpr,
+        onValueChanged,
+      };
     },
   });
 </script>
