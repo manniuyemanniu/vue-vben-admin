@@ -1,0 +1,14 @@
+.footer{ height: 450px; background: url("../images/icon_148.png") no-repeat 100% 100%; display: flex; flex-direction: column; justify-content: space-between}
+.footer-t{ width: 1200px; margin: 0 auto}
+.lianjie{ height: 90px; border-bottom: 1px solid #3e4056; display: flex; justify-content: left; align-items: center}
+.footer-b{ height: 66px; border-top: 1px solid #3e4056; text-align: center; line-height: 66px}
+.footer-list{color: white}
+.footer-list p a{color: #999999; font-size: 14px}
+.footer-list p a:hover{color: white}
+.foot-line{ height: 1px; width: 32px; background: white}
+.footer-list p, .footer-list div{ margin-top: 20px}
+.footer-all{ width: 800px; display: flex; justify-content: space-between}
+.footer-main{ display: flex; justify-content: space-between}
+.footer-phone{ width: 250px}
+.lianx-img{ display: flex; justify-content: space-between}
+.footer-phone{ color: white}

@@ -1,0 +1,88 @@
+.banner{ height: 745px}
+.banner img{ width: 100%; height: 100%}
+.shuju{ width: 100%; height: 100px; background-color: #f9f9f9}
+.shuju-main{ width: 1200px; margin: 0 auto}
+.shuju_01, .shuju_02, .shuju_03{ width: 400px}
+.shuju>div{ text-align: center}
+.sj-num{ line-height: 36px}
+
+.effect-all{ width: 100%}
+.effect{ width: 1200px; margin: 0 auto; padding: 60px 0}
+.effect-t{ display: flex; flex-direction: column; align-items: center}
+.effect-title{ font-size: 32px}
+.effect-title p{ padding: 0 50px}
+.line{ width: 60px; height: 2px; background-color: #009fe8; margin: 26px 0}
+.effect ul{ width: 1200px; display: flex; justify-content: space-around; margin-top: 30px; border-bottom: 1px solid #eee}
+.effect ul li{ line-height: 60px; font-size: 18px; color: #333; cursor: pointer}
+.effect-active{ line-height: 60px; font-size: 18px; color: #009fe8 !important; background: url("../images/icon_19.png") no-repeat center 55px}
+.effect ul li:hover{ line-height: 60px; font-size: 18px; color: #009fe8; background: url("../images/icon_19.png") no-repeat center 55px}
+.effect-main{ display: flex}
+.effect-text{ width: 620px; padding-left: 80px; margin-top: 50px}
+.effect-img{ width: 500px; margin-top: 50px; text-align: center}
+.effect-t-main{ line-height: 30px; margin-top: 20px}
+
+.way{ width: 100%; height: 750px; background: url("../images/icon_q_80.png") no-repeat}
+.way-main{ width: 1200px; margin: 0 auto; padding-top: 60px}
+.wayTitle{ width: 1200px}
+.way-list{ width: 100%; height: 499px; margin-top: 40px}
+.wayListL{ width: 340px; height: 499px; display: flex; flex-direction: column; justify-content: space-between}
+.wayListR{ width: 780px; line-height: 36px}
+.way-list-title_01,.way-list-title_02,.way-list-title_03,.way-list-title_04{ height: 124px; padding: 0 40px}
+.way-list-title_01{ background: url("../images/icon_q_51.png") no-repeat 40px center rgba(0,0,0,0.5); color: #999999; display: flex; flex-direction: column; justify-content: center}
+.way-list-title_01:hover{  background: url("../images/icon_q_53.png") no-repeat 40px center #009fe8; color: white}
+.way-list-title_02{ background: url("../images/icon_q_60.png") no-repeat 40px center rgba(0,0,0,0.5); color: #999999; display: flex; flex-direction: column; justify-content: center}
+.way-list-title_02:hover{ background: url("../images/icon_q_61.png") no-repeat 40px center #009fe8; color: white}
+.way-list-title_03{ background: url("../images/icon_q_70.png") no-repeat 40px center rgba(0,0,0,0.5); color: #999999; display: flex; flex-direction: column; justify-content: center}
+.way-list-title_03:hover{ background: url("../images/icon_q_71.png") no-repeat 40px center #009fe8; color: white}
+.way-list-title_04{ background: url("../images/icon_q_74.png") no-repeat 40px center rgba(0,0,0,0.5); color: #999999; display: flex; flex-direction: column; justify-content: center}
+.way-list-title_04:hover{ background: url("../images/icon_q_75.png") no-repeat 40px center #009fe8; color: white}
+.wayP1, .wayP2{ line-height: 30px; margin-left: 60px}
+.wayListR>div{ display: none}
+.wayListR div.showed{ display: block !important;}
+
+.status{ width: 100%; padding: 60px 0}
+.status-main{ width: 1200px; margin: 0 auto}
+.statusList{ margin-top: 40px}
+.statusDetails{ width: 260px; height: 440px; background-color: #f9f9f9; text-align: center; padding: 0 30px}
+.statusDetails img{ margin: 46px 0}
+.statusPm{ line-height: 36px; text-align: left; margin-top: 10px}
+
+.adviser{ width: 100%; background-color: #232425}
+.adviser-main{ width: 1200px; height: 720px; margin: 0 auto}
+.adviserImg{ width: 600px; display: flex; align-items: flex-end}
+.adviserDetails{ width: 600px; padding-top: 90px}
+.adviserName{ height: 47px}
+.adviserCn{ width: 174px; height: 47px; background: url("../images/icon_q_06.png") no-repeat; line-height: 40px; text-align: center}
+.adviserEn{ padding-left: 20px}
+.adviserText{ line-height: 36px}
+.adviserBtLeft{ width: 22px; height: 22px; background: url("../images/icon_q_09.png") no-repeat; cursor: pointer}
+.adviserBtRight{ width: 22px; height: 22px; background: url("../images/icon_q_03.png") no-repeat; cursor: pointer}
+.adviserPeople{ width: 556px}
+.adviserPeople ul li{ width: 139px; float: left; display: flex; flex-direction: column; align-items: center}
+.adviserOn{ width: 12px; height: 19px}
+.adviserPeopleList{ width: 70px; height: 101px; background: url("../images/icon_q_21.png") no-repeat; margin-top: 10px; cursor: pointer}
+.adviserPeople p{ font-size: 16px; color: white; margin-top: 10px}
+
+.case{ width: 1200px; margin: 0 auto; padding: 60px 0}
+.caseMain{ height: 400px; margin-top: 50px}
+.caseImg{ width: 570px;}
+.caseList{ width: 600px}
+.caseLeft{ width: calc(100% - 40px); height: 64px; background: rgba(0,0,0,0.5); padding: 10px 20px; position: relative; top: -87px; color: white}
+.caseL-title{ height: 34px; line-height: 34px}
+.caseLeftTxt{ height: 30px; line-height: 30px}
+.caseL-text{ width: 85%}
+.caseL-time{ width: 15%}
+.caseList ul li{ height: 100px; width: 100%; display: flex; align-items: center}
+.caseList ul li:hover{ height: 100px; width: 100%; background-color: #f8f8f8}
+.caseList ul li:hover .caseListDay{ color: #009fe8}
+.caseList ul li a{ color: #333333}
+.caseListTime{ width: 100px; display: flex; flex-direction: column; align-items: center}
+.caseListTxt{ width: 500px; display: flex; flex-direction: column; justify-content: center}
+
+
+.cooperationAll{ width: 100%; background-color: #f8f8f8}
+.cooperation{ width: 1200px; margin: 0 auto; padding-top: 100px; padding-bottom: 50px}
+.cooperation-bg{ background-color: #f8f8f8; padding: 1px 0; margin-top: 40px}
+.cooperation-list{ padding: 0 1px; display: flex; justify-content: space-between}
+.cooperation-img{ width: 198px; background-color: white}
+.cooperation-list:last-child{ margin-top: 1px}

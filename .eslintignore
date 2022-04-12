@@ -13,3 +13,6 @@ dist
 .local
 /bin
 Dockerfile
+/pages/js/jquery-1.6.js
+/pages/js/jquery-1.11.0.min.js
+/pages/js/jquery.terseBanner.min.js

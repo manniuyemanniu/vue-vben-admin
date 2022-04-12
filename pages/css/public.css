@@ -1,0 +1,48 @@
+body{ min-width: 1366px}
+*{ padding: 0; margin: 0}
+a{ text-decoration: none}
+input{ border: none}
+input{ outline: none}
+button{ border: none; cursor: pointer}
+ul li{ list-style-type: none}
+.float-l{ float: left}
+.float-r{ float: right}
+.font-12{ font-size: 12px}
+.font-14{ font-size: 14px}
+.font-16{ font-size: 16px}
+.font-18{ font-size: 18px}
+.font-20{ font-size: 20px}
+.font-24{ font-size: 24px}
+.font-30{ font-size: 30px}
+.font-b{ font-weight: bold}
+.clr3{ color: #333333}
+.clr6{ color: #666666}
+.clr9{ color: #999999}
+.clr-w{ color: white}
+.clr-c{ color: #cccccc}
+.clrblue{ color: #009fe8}
+.mar-t-10{ margin-top: 10px}
+.mar-t-20{ margin-top: 20px}
+.mar-l-10{ margin-left: 10px}
+.mar-l-20{ margin-left: 20px}
+
+.flex-ju-sp{display: flex; justify-content: space-between}
+.flex-ju-c{ display: flex; justify-content: center}
+.flex-al-c{ display: flex; align-items: center}
+.flex-ju-sa{ display: flex; justify-content: space-around}
+.flex-al-e{ display: flex; align-items: flex-end}
+.flex-cc{ display: flex; justify-content: center; align-items: center}
+
+.head{ height: 40px; background-color: #f5f5f5}
+.head-main{ width: 1200px; margin: 0 auto}
+.head-bq{ width: 400px}
+.head-bq>a:hover{ color: #009fe8}
+.nav-logo{ height: 80px}
+.nav-main{ width: 1200px; margin: 0 auto}
+.logo{ width: 66px; height: 44px}
+.logo img{ width: 100%; height: 100%;}
+.nav{ width:700px}
+.nav li{ padding: 5px 20px; color: #333333}
+.nav li:hover{ background: #009fe8; padding: 5px 20px; border-radius: 50px; color: white}
+.nav-logo input{ width: 168px; height: 32px; border-radius: 16px; border: 1px solid #eee; padding-left: 16px; background: url("../images/search.png") no-repeat 92% center}
+.nav-logo input::-webkit-input-placeholder{ color: #ccc}
