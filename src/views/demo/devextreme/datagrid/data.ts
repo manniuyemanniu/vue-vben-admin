@@ -1,4 +1,4 @@
-import { CustomizeColumns } from '/@/components/devextreme/dexextreme-datagrid-v2';
+import { CustomizeColumns } from '../../../../components/devextreme/dexextreme-datagrid';
 
 export const formOption = {
   alignItemLabels: true,

@@ -3,7 +3,11 @@
 ## 组件目录详解
 
 ```
-
+├── devextreme-button  【按钮组件】
+├── devextreme-datagrid 【网格组件】 已舍弃
+├── devextreme-form 【表单组件】 已舍弃
+├── dexextreme-datagrid 【网格组件】
+├── dexextreme-dropdown-datagrid 【下拉框与网格的结合控件】
 ```
 
 ### 2022-03-14 开发

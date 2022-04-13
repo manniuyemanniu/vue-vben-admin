@@ -4,26 +4,31 @@
     <div class="content-block dx-card responsive-paddings">
       <div class="p-4-wapper-button"> <DevExtremeButtonList :buttons="buttons" /></div>
       <div class="p-4-wapper-datagrid" ref="dataGridHelightRef">
-        <DataGrid
+        <!-- <DataGrid
           ref="dataGridRef"
           :dataSource="dataSource"
           :columns="columns"
           :height="height"
           :onRowDblClick="onRowDblClick"
-        />
+        /> -->
+        <DataGrid @register="register" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted, ref, unref } from 'vue';
+  import { defineComponent, onMounted, ref } from 'vue';
   import { DevextremeButtonSchema } from '/@/components/devextreme/devextreme-button/src/types/devextreme-button';
-  import { DataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/index';
+  import {
+    DataGrid,
+    useDataGrid,
+    CustomizeColumns,
+  } from '/@/components/devextreme/dexextreme-datagrid';
   import DevExtremeButtonList from '/@/components/devextreme/devextreme-button/src/DevExtremeButtonList.vue';
   import CustomStore from 'devextreme/data/custom_store';
   import { RowDblClickEvent } from 'devextreme/ui/data_grid';
-  import { dataGridActionOptions } from '/@/components/devextreme/dexextreme-datagrid-v2/src/types/datagrid';
+  import { dataGridActionOptions } from '/@/components/devextreme/dexextreme-datagrid/src/types/datagrid';
 
   function isNotEmpty(value) {
     return value !== undefined && value !== null && value !== '';
@@ -69,29 +74,59 @@
     setup() {
       const dataGridHelightRef = ref<HTMLElement | null>(null);
       const dataGridRef = ref<Nullable<dataGridActionOptions>>(null);
+      const dataSource = store;
+      const columns: Array<CustomizeColumns> = [
+        {
+          dataField: 'OrderNumber',
+          caption: 'OrderNumber',
+          dataType: 'string',
+        },
+        {
+          dataField: 'OrderDate',
+          caption: 'OrderDate',
+          dataType: 'string',
+        },
+        {
+          dataField: 'StoreCity',
+          caption: 'StoreCity',
+          dataType: 'string',
+        },
+        {
+          dataField: 'StoreState',
+          caption: 'StoreState',
+          dataType: 'string',
+        },
+        {
+          dataField: 'Employee',
+          caption: 'Employee',
+          dataType: 'string',
+        },
+        {
+          dataField: 'SaleAmount',
+          caption: 'SaleAmount',
+          dataType: 'string',
+        },
+      ];
 
-      function getTableAction() {
-        const dataGridAction = unref(dataGridRef);
-        if (!dataGridAction) {
-          throw new Error('dataGridAction is null');
-        }
-        return dataGridAction;
-      }
+      const [register, { instance, getSelectedRowsData }] = useDataGrid({
+        dataSource: dataSource,
+        customColumn: columns,
+      });
 
       /**
        *  获得选中事件
        */
-      function getSelectRowList() {
-        const data = getTableAction().getSelectedRowsData();
+      async function getSelectRowList() {
+        const data = await getSelectedRowsData();
         console.log('getSelectRowList', data);
       }
 
       /**
        *  获得选中事件
        */
-      function getInstance() {
-        const instance = getTableAction().instance();
-        console.log('getInstance', instance);
+      async function getInstance() {
+        const result = await instance();
+        console.log('getInstance', result);
       }
       //#region 按钮
       // const AddDemo = () => {
@@ -100,9 +135,9 @@
       // const EditDemo = () => {
       //   console.log('编辑');
       // };
-      const DeleteDemo = () => {
-        const instance = getTableAction().instance();
-        instance.refresh();
+      const DeleteDemo = async () => {
+        const result = await instance();
+        result.refresh();
       };
 
       const buttons: DevextremeButtonSchema[] = [
@@ -140,16 +175,6 @@
       }
       //#endregion
 
-      const dataSource = store;
-      const columns = [
-        'OrderNumber',
-        'OrderDate',
-        'StoreCity',
-        'StoreState',
-        'Employee',
-        'SaleAmount',
-      ];
-
       const height = ref(0);
 
       onMounted(() => {
@@ -157,11 +182,12 @@
       });
 
       return {
+        register,
         onRowDblClick,
         onContentReady,
         buttons,
         dataSource,
-        columns,
+        // columns,
         dataGridHelightRef,
         dataGridRef,
         height,

@@ -1,10 +1,15 @@
-import { isNullOrUnDef } from '/@/utils/is';
+import { isArray, isNullOrUnDef } from '/@/utils/is';
 import DataSource from 'devextreme/data/data_source';
-import { ComputedRef, Ref, unref } from 'vue';
+import { computed, ComputedRef, ref, Ref, unref, watch } from 'vue';
 import {
   dropDownDataGridPropsOptionos,
   dropDownDataGridActionOptions,
 } from '../types/dropdown-datagrid';
+import { CustomizeColumns } from '../../../dexextreme-datagrid';
+import { INDEX_COLUMN_FLAG } from '/@/components/Table/src/const';
+import { useI18n } from '/@/hooks/web/useI18n';
+import { cloneDeep } from 'lodash-es';
+import ArrayStore from 'devextreme/data/array_store';
 interface UseDxDataGridActionContext {
   getProps: ComputedRef<dropDownDataGridPropsOptionos>;
   dxDropDownElRef: Ref<dropDownDataGridActionOptions>;
@@ -33,6 +38,27 @@ export function useDropDownDataGridEvent({
   dataGridRef,
   searchTimer = null,
 }: UseDxDataGridActionContext) {
+  const columnsRef = ref(unref(getProps).customColumn) as unknown as Ref<Array<CustomizeColumns>>;
+
+  const getViewColumns = computed(() => {
+    const columns = cloneDeep(unref(columnsRef));
+    // handleIndexColumn(getProps, columns);
+    if (!columns) {
+      return [];
+    }
+    return columns.map((column) => {
+      column = handleColumsItem(column);
+      return column;
+    });
+  });
+
+  watch(
+    () => unref(getProps).customColumn,
+    (customColumn) => {
+      columnsRef.value = customColumn;
+    },
+  );
+
   /**
    * 获取drop-down的instance信息
    * @returns DataGrid
@@ -53,8 +79,15 @@ export function useDropDownDataGridEvent({
    * @returns
    */
   function makeAsyncDataSource() {
-    const { customDataSource } = unref(getProps);
-    return customDataSource;
+    const { customDataSource, customKeyExpr } = unref(getProps);
+    if (isArray(customDataSource)) {
+      return new ArrayStore({
+        data: customDataSource,
+        key: customKeyExpr,
+      });
+    } else {
+      return customDataSource;
+    }
   }
   /**
    *
@@ -179,7 +212,62 @@ export function useDropDownDataGridEvent({
     }
   }
 
+  /**
+   * 处理列明细信息
+   * @param item
+   * @returns
+   */
+  function handleColumsItem(item: CustomizeColumns): CustomizeColumns {
+    const { t } = useI18n();
+    if (item.flag === INDEX_COLUMN_FLAG) {
+      return item;
+    }
+    item.caption = t(item.caption || '');
+    // dataType:'string' | 'number' | 'date' | 'boolean' | 'object' | 'datetime';
+    switch (item.dataType) {
+      case 'string': {
+        item.alignment = 'left';
+        break;
+      }
+      case 'number': {
+        item.alignment = 'right';
+        break;
+      }
+      // case 'time': {
+      //   item.alignment = 'right';
+      //   item.format = 'HH:mm:ss';
+      //   break;
+      // }
+      case 'date': {
+        item.alignment = 'right';
+        item.format = 'yyyy-MM-dd';
+        item.minWidth = 180;
+        break;
+      }
+      case 'datetime': {
+        item.alignment = 'right';
+        item.format = 'yyyy-MM-dd HH:mm:ss';
+        item.minWidth = 180;
+        break;
+      }
+      case 'boolean': {
+        item.alignment = 'center';
+        break;
+      }
+      case 'object': {
+        item.alignment = 'left';
+        break;
+      }
+      default: {
+        item.alignment = 'left';
+        break;
+      }
+    }
+    return item;
+  }
+
   return {
+    getViewColumns,
     dataGridDataSource,
     dropDownBoxDataSource,
     instance,

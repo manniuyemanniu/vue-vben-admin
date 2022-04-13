@@ -1,4 +1,4 @@
-import { CustomizeColumns } from '/@/components/devextreme/dexextreme-datagrid-v2';
+import { CustomizeColumns } from '../../../../../components/devextreme/dexextreme-datagrid';
 
 export const columns: Array<CustomizeColumns> = [
   {
@@ -12,6 +12,14 @@ export const columns: Array<CustomizeColumns> = [
     caption: '员工编码',
     dataType: 'string',
     // editCellTemplate: 'dropDownBoxEditor',
+  },
+  {
+    dataField: 'sex',
+    caption: '性别',
+    dataType: 'boolean',
+    // editCellTemplate: 'dropDownBoxEditor',
+    trueText: '男',
+    falseText: '女',
   },
   {
     dataField: 'name',
@@ -74,6 +82,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: false,
   },
   {
     id: 2,
@@ -86,6 +95,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: true,
   },
   {
     id: 3,
@@ -98,6 +108,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: false,
   },
   {
     id: 4,
@@ -110,6 +121,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: true,
   },
   {
     id: 5,
@@ -122,6 +134,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: false,
   },
   {
     id: 6,
@@ -134,6 +147,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: false,
   },
   {
     id: 7,
@@ -146,6 +160,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: false,
   },
   {
     id: 8,
@@ -158,6 +173,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: true,
   },
   {
     id: 9,
@@ -170,6 +186,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: false,
   },
   {
     id: 10,
@@ -182,6 +199,7 @@ export const tableData = [
     ruleCoe: 'R0001',
     ruleName: '管理员',
     createTime: new Date(),
+    sex: true,
   },
 ];
 

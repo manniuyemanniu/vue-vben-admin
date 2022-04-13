@@ -1,8 +1,9 @@
 import { propTypes } from '/@/utils/propTypes';
-// import { CustomizeColumns } from '../../dexextreme-datagrid-v2';
+// import { CustomizeColumns } from '../../dexextreme-datagrid';
 import { PopupProperties } from './types/dropdown-datagrid';
-import { DataSourceLikes } from '/@/components/devextreme/dexextreme-datagrid-v2/src/types/datasource';
+import { DataSourceLikes } from '../../dexextreme-datagrid/src/types/datasource';
 import type { PropType } from 'vue';
+import { CustomizeColumns } from '../../dexextreme-datagrid';
 
 export const dropDownDataGridProps = {
   /**
@@ -14,6 +15,10 @@ export const dropDownDataGridProps = {
    *指定哪个数据字段为 UI 组件的值提供唯一值。
    */
   valueExpr: { type: String },
+  /**
+   * customDataSource为数组是,键值必传
+   */
+  customKeyExpr: { type: [Array, String] as PropType<Array<string> | string> },
   /**
    * 指定应显示其值的数据字段。
    */
@@ -68,5 +73,9 @@ export const dropDownDataGridProps = {
     default: {
       class: 'drop-down-input',
     },
+  },
+  customColumn: {
+    type: [Array] as PropType<Array<CustomizeColumns>>,
+    default: () => [],
   },
 };

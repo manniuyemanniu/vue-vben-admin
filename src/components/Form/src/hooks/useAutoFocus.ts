@@ -20,7 +20,7 @@ export async function useAutoFocus({
       return;
     }
     await nextTick();
-    debugger;
+
     const schemas = unref(getSchema);
     const formEl = unref(formElRef);
     const el = (formEl as any)?.$el as HTMLElement;

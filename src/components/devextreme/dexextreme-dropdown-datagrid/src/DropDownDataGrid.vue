@@ -13,6 +13,7 @@
       <template #dataGridContentTemplate="{}">
         <DxDataGrid
           ref="dxDropDownDataGridElRef"
+          key-expr="code"
           :data-source="dataGridDataSource"
           :remote-operations="true"
           :selected-row-keys="[currentValue]"
@@ -25,13 +26,12 @@
           :showBorders="true"
           @initialized="dataGridOnInitialized"
         >
-          <!-- :height="250" -->
-          <!-- :on-selection-changed="onSelectionChanged" -->
-          <!-- key-expr="ID" -->
-          <DxColumn data-field="ID" />
-          <DxColumn data-field="FullName" />
-          <DxColumn data-field="Title" />
-          <DxColumn data-field="Department" />
+          <!-- 处理列信息 开始 -->
+          <template v-for="column in getViewColumns" :key="column.dataField">
+            <DxColumn v-bind="column" />
+          </template>
+          <!-- 处理列信息 结束 -->
+
           <DxPaging :enabled="true" :page-size="10" />
           <DxScrolling mode="virtual" />
           <DxSelection mode="single" />
@@ -123,6 +123,7 @@
         customKeyDown,
         // customDataGridOnContentReady,
         // customDataGridOnKeyDown,
+        getViewColumns,
       } = useDropDownDataGridEvent({
         getProps,
         dxDropDownElRef: dxDropDownElRef as Ref<dropDownDataGridActionOptions>,
@@ -134,6 +135,7 @@
         dataGridRef,
       });
 
+      console.log('dataGridDataSource', dataGridDataSource);
       // const { customInput, customOpened, customClose, customKeyDown } =
       //   useDropDownDataGridMethods();
 
@@ -203,6 +205,7 @@
         getdropDownDataGridClass,
         getBindValues,
         dataGridDataSource,
+        getViewColumns,
         customOnRowDblClick,
         dataGridOnInitialized,
       };

@@ -50,6 +50,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           find: /\/#\//,
           replacement: pathResolve('types') + '/',
         },
+        {
+          find: 'devextreme/ui',
+          replacement: 'devextreme/esm/ui',
+        },
       ],
     },
     server: {

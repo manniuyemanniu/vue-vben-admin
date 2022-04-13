@@ -22,19 +22,15 @@
 </template>
 
 <script lang="ts">
-  // import { defineComponent, ref, unref } from 'vue';
-
-  import { defineComponent, ref } from 'vue';
-  // import { DevextremeButtonSchema } from '/@/components/devextreme/devextreme-button/src/types/devextreme-button';
+  import { defineComponent, ref, unref } from 'vue';
   import {
     clickType,
     CustomizeColumns,
     DataGrid,
     dataGridActionOptions,
     ToolbarButtonSchema,
-  } from '/@/components/devextreme/dexextreme-datagrid-v2/index';
+  } from '/@/components/devextreme/dexextreme-datagrid/index';
   import DevExtremeButtonList from '/@/components/devextreme/devextreme-button/src/DevExtremeButtonList.vue';
-  // import { useDataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/src/hooks/useDataGrid';
   import { createStore } from 'devextreme-aspnet-data-nojquery';
 
   import CreateOrEditModal from './components/CreateOrEditModal.vue';
@@ -52,35 +48,18 @@
       //#region 【button】
       const exportFileName = '部门信息';
       const dataGridRef = ref<Nullable<dataGridActionOptions>>(null);
-      // function getDataGridAction() {
-      //   const dataGridAction = unref(dataGridRef);
-      //   if (!dataGridAction) {
-      //     throw new Error('dataGridAction is null');
-      //   }
-      //   return dataGridAction;
-      // }
-
-      // const exportAll = async () => {
-      //   await getDataGridAction().customExportAll();
-      // };
-      // const exportSelect = async () => {
-      //   await getDataGridAction().customExportSelect();
-      // };
-      // const exportPage = async () => {
-      //   await getDataGridAction().customExportPage();
-      // };
-
-      // const clearFilter = async () => {
-      //   console.log('clearFilter');
-      //   await getDataGridAction().clearFilter();
-      // };
-
-      // const showColumnChooser = async () => {
-      //   await getDataGridAction().showColumnChooser();
-      // };
-      // function CreateOrEditOpenModel() {
-      //   openDrawer(true);
-      // }
+      function getDataGridAction() {
+        const dataGridAction = unref(dataGridRef);
+        if (!dataGridAction) {
+          throw new Error('dataGridAction is null');
+        }
+        return dataGridAction;
+      }
+      function getDataGridSetting() {
+        const instance = getDataGridAction().instance();
+        console.log('getDataGridSetting', instance);
+        console.log('getDataGridSetting==>getVisibleColumns', instance.getVisibleColumns());
+      }
 
       const buttons: Array<ToolbarButtonSchema> = [
         {
@@ -95,6 +74,7 @@
           text: t('routes.demo.devextreme.dataGrid.edit'),
           icon: 'edit',
           onClickType: clickType.editClick,
+          onClick: getDataGridSetting,
         },
         {
           tabIndex: 2,

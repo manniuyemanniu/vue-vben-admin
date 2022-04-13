@@ -8,18 +8,18 @@
       name="viewport"
       content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0"
     />
-    <title><%= title %></title>
+    <title> <%= title %> </title>
     <link rel="icon" href="/favicon.ico" />
     <link
       rel="dx-theme"
       data-theme="generic.dark"
-      href="./node_modules/devextreme/dist/css/dx.dark.css"
+      href="/resource/css/dx.dark.css"
       data-active="false"
     />
     <link
       rel="dx-theme"
       data-theme="generic.light"
-      href="./node_modules/devextreme/dist/css/dx.light.css"
+      href="/resource/css/dx.light.css"
       data-active="true"
     />
     <link
@@ -27,7 +27,8 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+
+  <body class="dx-viewport">
     <script>
       (() => {
         var htmlRoot = document.getElementById('htmlRoot');
@@ -139,21 +140,25 @@
           left: 0;
           animation-delay: 1.2s;
         }
+
         @keyframes antRotate {
           to {
             transform: rotate(405deg);
           }
         }
+
         @keyframes antRotate {
           to {
             transform: rotate(405deg);
           }
         }
+
         @keyframes antSpinMove {
           to {
             opacity: 100%;
           }
         }
+
         @keyframes antSpinMove {
           to {
             opacity: 100%;
@@ -166,7 +171,7 @@
           <div class="app-loading-dots">
             <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
           </div>
-          <div class="app-loading-title"><%= title %></div>
+          <div class="app-loading-title"> <%= title %> </div>
         </div>
       </div>
     </div>

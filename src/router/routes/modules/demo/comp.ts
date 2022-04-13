@@ -35,11 +35,11 @@ const comp: AppRouteModule = {
       },
       children: [
         {
-          path: 'basic',
-          name: 'datagriddemo',
-          component: () => import('/@/views/demo/devextreme/datagrid/datagriddemo.vue'),
+          path: 'dataGridDemo01',
+          name: 'dataGridDemo01',
+          component: () => import('/@/views/demo/devextreme/datagrid/dataGridDemo01.vue'),
           meta: {
-            title: t('routes.demo.devextreme.datagriddemo'),
+            title: t('routes.demo.devextreme.dataGridDemo02'),
           },
         },
         {
@@ -47,41 +47,33 @@ const comp: AppRouteModule = {
           name: 'dataGridDemo02',
           component: () => import('/@/views/demo/devextreme/datagrid/dataGridDemo02.vue'),
           meta: {
-            title: t('routes.demo.devextreme.dataGridDemo02'),
-          },
-        },
-        {
-          path: 'dataGridDemo03',
-          name: 'dataGridDemo03',
-          component: () => import('/@/views/demo/devextreme/datagrid/dataGridDemo03.vue'),
-          meta: {
             title: t('routes.demo.devextreme.dataGridDemo03'),
           },
         },
-        {
-          path: 'RowEditDataGridDemo',
-          name: 'RowEditDataGridDemo',
-          component: () => import('/@/views/demo/devextreme/datagrid/RowEditDataGridDemo.vue'),
-          meta: {
-            title: t('routes.demo.devextreme.rowEditDataGrid'),
-          },
-        },
-        {
-          path: 'CellEditDataGridDemo',
-          name: 'CellEditDataGridDemo',
-          component: () => import('/@/views/demo/devextreme/datagrid/CellEditDataGridDemo.vue'),
-          meta: {
-            title: t('routes.demo.devextreme.cellEditDataGrid'),
-          },
-        },
-        {
-          path: 'CustomDataGridDemo',
-          name: 'CustomDataGridDemo',
-          component: () => import('/@/views/demo/devextreme/datagrid/CustomDataGridDemo.vue'),
-          meta: {
-            title: t('routes.demo.devextreme.customEditDataGrid'),
-          },
-        },
+        // {
+        //   path: 'RowEditDataGridDemo',
+        //   name: 'RowEditDataGridDemo',
+        //   component: () => import('/@/views/demo/devextreme/datagrid/RowEditDataGridDemo.vue'),
+        //   meta: {
+        //     title: t('routes.demo.devextreme.rowEditDataGrid'),
+        //   },
+        // },
+        // {
+        //   path: 'CellEditDataGridDemo',
+        //   name: 'CellEditDataGridDemo',
+        //   component: () => import('/@/views/demo/devextreme/datagrid/CellEditDataGridDemo.vue'),
+        //   meta: {
+        //     title: t('routes.demo.devextreme.cellEditDataGrid'),
+        //   },
+        // },
+        // {
+        //   path: 'CustomDataGridDemo',
+        //   name: 'CustomDataGridDemo',
+        //   component: () => import('/@/views/demo/devextreme/datagrid/CustomDataGridDemo.vue'),
+        //   meta: {
+        //     title: t('routes.demo.devextreme.customEditDataGrid'),
+        //   },
+        // },
         {
           path: 'form',
           name: 'formdemo',

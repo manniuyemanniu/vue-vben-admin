@@ -1,5 +1,5 @@
 import { Properties } from 'devextreme/ui/popup';
-import { DataSourceLikes } from '/@/components/devextreme/dexextreme-datagrid-v2/src/types/datasource';
+import { CustomizeColumns, DataSourceLikes } from '../../../dexextreme-datagrid';
 
 export type PopupProperties = Properties;
 export interface dropDownDataGridPropsOptionos {
@@ -15,6 +15,7 @@ export interface dropDownDataGridPropsOptionos {
    * 指定哪个数据字段为 UI 组件的值提供唯一值
    */
   valueExpr: string;
+
   /**
    *
    */
@@ -55,6 +56,10 @@ export interface dropDownDataGridPropsOptionos {
    * 文本框设置
    */
   inputAttr: any;
+
+  customColumn: Array<CustomizeColumns>;
+
+  customKeyExpr?: string | Array<string>;
   // gridBoxOpened: boolean;
 
   // /**

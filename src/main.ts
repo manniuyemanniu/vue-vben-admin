@@ -1,5 +1,6 @@
 import 'virtual:windi-base.css';
 import 'virtual:windi-components.css';
+// import 'devextreme/dist/css/dx.light.css';
 import '/@/design/index.less';
 import 'virtual:windi-utilities.css';
 // Register icon sprite
@@ -14,6 +15,7 @@ import { setupStore } from '/@/store';
 import { setupGlobDirectives } from '/@/directives';
 import { setupI18n } from '/@/locales/setupI18n';
 import { registerGlobComp } from '/@/components/registerGlobComp';
+import themes from 'devextreme/ui/themes';
 
 async function bootstrap() {
   const app = createApp(App);
@@ -43,10 +45,11 @@ async function bootstrap() {
   // Configure global error handling
   setupErrorHandle(app);
 
+  console.log(themes.current());
   // https://next.router.vuejs.org/api/#isready
   // await router.isReady();
 
   app.mount('#app');
 }
 
-bootstrap();
+themes.initialized(bootstrap);

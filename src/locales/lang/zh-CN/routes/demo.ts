@@ -23,6 +23,8 @@ export default {
       exportPage: '导出当前页',
       clearFilter: '清除筛选',
       columnChooser: '列设置',
+      action: '操作',
+      serialNumber: '序号',
     },
   },
   charts: {

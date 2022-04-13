@@ -27,6 +27,7 @@
   ]);
 
   function toggleDarkMode() {
+    debugger;
     const darkMode = getDarkMode.value === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK;
     setDarkMode(darkMode);
     updateDarkTheme(darkMode);

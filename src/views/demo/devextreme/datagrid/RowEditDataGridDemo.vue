@@ -4,7 +4,7 @@
     <PageWrapper title="devextreme-datagrid">
       <CollapseContainer title="DataGrid-Row编辑">
         <!-- <DevExtremeForm :schemas="schemas" :formData="formData" /> -->
-        <EditRowDataGrid @register="register" />
+        <EditDataGrid @register="register" />
       </CollapseContainer>
 
       <template #rightFooter>
@@ -17,14 +17,14 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { employes, states, columns } from './data';
-  import { useDataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/src/hooks/useDataGrid';
+  import { useDataGrid } from '/@/components/devextreme/dexextreme-datagrid/src/hooks/useDataGrid';
   import DevExtremeButtonList from '/@/components/devextreme/devextreme-button/src/DevExtremeButtonList.vue';
-  import { EditRowDataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/index';
+  import { EditDataGrid } from '/@/components/devextreme/dexextreme-datagrid/index';
   import { CollapseContainer } from '/@/components/Container';
   import { PageWrapper } from '/@/components/Page';
   export default defineComponent({
     name: 'RowEditDataGrid',
-    components: { EditRowDataGrid, CollapseContainer, PageWrapper, DevExtremeButtonList },
+    components: { EditDataGrid, CollapseContainer, PageWrapper, DevExtremeButtonList },
     setup() {
       const buttons = [
         {

@@ -4,7 +4,7 @@
     <PageWrapper title="devextreme-datagrid">
       <CollapseContainer title="DataGrid-Cell编辑">
         <!-- <DevExtremeForm :schemas="schemas" :formData="formData" /> -->
-        <EditCellDataGrid @register="register">
+        <EditDataGrid @register="register">
           <!-- <template #StateIDCellTemplate="{ data }">
             <span v-if="data.data.StateID === 5" style="text-decoration: line-through; color: red">
               {{ data.data.StateID }}
@@ -23,7 +23,7 @@
               :dropDownOptions="{ height: 500, width: 500 }"
             />
           </template>
-        </EditCellDataGrid>
+        </EditDataGrid>
       </CollapseContainer>
 
       <template #rightFooter>
@@ -36,11 +36,8 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   // import { employes, states, columns } from './data';
-  import { useDataGrid } from '/@/components/devextreme/dexextreme-datagrid-v2/src/hooks/useDataGrid';
-  import {
-    CustomizeColumns,
-    EditCellDataGrid,
-  } from '/@/components/devextreme/dexextreme-datagrid-v2';
+  import { useDataGrid } from '/@/components/devextreme/dexextreme-datagrid/src/hooks/useDataGrid';
+  import { CustomizeColumns, EditDataGrid } from '/@/components/devextreme/dexextreme-datagrid';
   import { DropDownDataGrid } from '/@/components/devextreme/dexextreme-dropdown-datagrid';
   import { CollapseContainer } from '/@/components/Container';
   import { PageWrapper } from '/@/components/Page';
@@ -50,7 +47,7 @@
   export default defineComponent({
     name: 'CustomDataGridDemo',
     components: {
-      EditCellDataGrid,
+      EditDataGrid,
       CollapseContainer,
       PageWrapper,
       DevExtremeButtonList,
