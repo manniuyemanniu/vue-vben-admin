@@ -52,13 +52,6 @@
       </DxToolbar> -->
     </DxDataGrid>
 
-    <DxSelectBox
-      v-model="selectPage"
-      class="devextreme-wapper-selectBox"
-      :items="pager.allowedPageSizes"
-      :onValueChanged="onValueChanged"
-    />
-
     <!-- <template v-for="column in getViewColumns" :key="column.dataField">
       {{ column }}
     </template> -->
@@ -70,7 +63,6 @@
   import { datagridProps } from '../props';
   import { DxDataGrid, DxEditing, DxToolbar, DxItem, DxColumn } from 'devextreme-vue/data-grid';
   import DxButton from 'devextreme-vue/button';
-  import DxSelectBox from 'devextreme-vue/select-box';
   import { dataGridActionOptions, dataGridPropsOptions } from '../types/datagrid';
   import { useDxDataGridEvent } from '../hooks/useDataGridEvent';
   import { omit } from 'lodash-es';
@@ -81,7 +73,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   export default defineComponent({
     name: 'EditDataGrid',
-    components: { DxDataGrid, DxEditing, DxSelectBox, DxToolbar, DxItem, DxColumn, DxButton },
+    components: { DxDataGrid, DxEditing, DxToolbar, DxItem, DxColumn, DxButton },
     props: datagridProps,
     emits: ['register'],
     setup(props, { attrs, emit, slots, expose }) {

@@ -12,6 +12,9 @@
           :editor-type="item.editorType"
           :editor-options="item.editorOptions"
           :is-required="item.isRequired ?? false"
+          :name="item.name"
+          :visible="item.visible"
+          :label="item.label"
         />
         <DxItem v-if="item.typeOption === 'empty'" item-type="empty" :colSpan="item.colSpan" />
       </template>

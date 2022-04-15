@@ -40,6 +40,10 @@
             editorOptions: { mode: 'text', readonly: false, name: 'dxTextBox' },
             editorType: 'dxTextBox',
             isRequired: true,
+            visible: true,
+            label: {
+              text: '表单项1',
+            },
           },
           {
             typeOption: 'simple',
@@ -47,6 +51,10 @@
             dataField: 'Name',
             editorOptions: { mode: 'text', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项2',
+            },
           },
           {
             typeOption: 'simple',
@@ -54,6 +62,10 @@
             dataField: 'Position',
             editorOptions: { mode: 'text', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项3',
+            },
           },
           {
             typeOption: 'simple',
@@ -67,6 +79,10 @@
               showAnalogClock: false,
             },
             editorType: 'dxDateBox',
+            visible: true,
+            label: {
+              text: '表单项4',
+            },
           },
           {
             typeOption: 'simple',
@@ -80,6 +96,10 @@
               showAnalogClock: false,
             },
             editorType: 'dxDateBox',
+            visible: true,
+            label: {
+              text: '表单项5',
+            },
           },
           {
             typeOption: 'simple',
@@ -87,6 +107,10 @@
             dataField: 'Address',
             editorOptions: { mode: 'text', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项6',
+            },
           },
           {
             typeOption: 'simple',
@@ -94,6 +118,10 @@
             dataField: 'City',
             editorOptions: { mode: 'text', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项7',
+            },
           },
           {
             typeOption: 'empty',
@@ -105,6 +133,10 @@
             dataField: 'State',
             editorOptions: { mode: 'text', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项8',
+            },
           },
           {
             typeOption: 'simple',
@@ -112,6 +144,10 @@
             dataField: 'ZipCode',
             editorOptions: { mode: 'text', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项9',
+            },
           },
           {
             typeOption: 'simple',
@@ -119,6 +155,10 @@
             dataField: 'Home',
             editorOptions: { mode: 'text', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项10',
+            },
           },
           {
             typeOption: 'simple',
@@ -126,6 +166,10 @@
             dataField: 'Mobile',
             editorOptions: { mode: 'text', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项11',
+            },
           },
           {
             typeOption: 'empty',
@@ -137,12 +181,20 @@
             dataField: 'Email',
             editorOptions: { mode: 'email', readonly: false },
             editorType: 'dxTextBox',
+            visible: true,
+            label: {
+              text: '表单项12',
+            },
           },
           {
             typeOption: 'simple',
             colSpan: 2,
             dataField: 'Skype',
             editorType: 'dxTextArea',
+            visible: true,
+            label: {
+              text: '表单项1',
+            },
           },
         ];
       };

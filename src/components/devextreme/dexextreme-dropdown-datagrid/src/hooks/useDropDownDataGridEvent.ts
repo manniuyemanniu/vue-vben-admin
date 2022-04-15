@@ -40,6 +40,37 @@ export function useDropDownDataGridEvent({
 }: UseDxDataGridActionContext) {
   const columnsRef = ref(unref(getProps).customColumn) as unknown as Ref<Array<CustomizeColumns>>;
 
+  const filterRow = {
+    applyFilter: 'auto', // 指定何时应用过滤器。
+    applyFilterText: 'Apply filter', // 指定当用户在应用过滤器的按钮上暂停时显示的提示文本。
+    betweenEndText: 'End', // 为编辑器指定一个占位符，该占位符在用户选择“介于”过滤器操作时指定范围的结尾。 默认值|ENd
+    betweenStartText: 'Start', // 为编辑器指定一个占位符，该占位符在用户选择“介于”过滤器操作时指定范围的开始。 默认值|Start
+    operationDescriptions: {},
+    resetOperationText: 'Reset', // 在过滤器列表上指定用于重置操作的文本。
+    showAllText: '(All)', // 为清除已应用的过滤器的项目指定文本。仅在过滤器行的单元格包含选择框时使用。
+    showOperationChooser: true, // 指定打开过滤器列表的图标是否可见。
+    visible: true, // 指定过滤器行是否可见。
+  };
+  const headerFilter = {
+    allowSearch: false,
+    height: 352,
+    searchTimeout: 500,
+    // texts: {
+    //   cancel: t(''),
+    //   emptyValue: '',
+    //   ok: t(''),
+    // },
+    visible: true,
+    width: 252,
+  };
+
+  const selection = {
+    allowSelectAll: true,
+    deferred: false,
+    mode: 'multiple',
+    selectAllMode: 'page',
+    showCheckBoxesMode: 'always',
+  };
   const getViewColumns = computed(() => {
     const columns = cloneDeep(unref(columnsRef));
     // handleIndexColumn(getProps, columns);
@@ -130,6 +161,7 @@ export function useDropDownDataGridEvent({
     const { valueExpr } = unref(getProps);
     const dataGrid = datagridinstance();
     const ddbInstance = e.component;
+
     if (ddbInstance.isKeyDown) {
       const contentReadyHandler = (args) => {
         const gridInstance = args.component;
@@ -177,7 +209,7 @@ export function useDropDownDataGridEvent({
     if (e.event.keyCode !== 40) return; //not arrow down
     if (!e.component.option('opened')) {
       e.component.isKeyDown = true;
-      e.component.opened();
+      e.component.open();
     } else dataGrid && dataGrid.focus();
   }
 
@@ -185,9 +217,9 @@ export function useDropDownDataGridEvent({
     // compare the last displayed value and the current real text in the input field
     let displayValue = dropDownBox.option('displayValue'),
       text = dropDownBox.option('text');
-    text = text && text.length && text;
-    displayValue = displayValue && displayValue.length && displayValue[0];
-    return text !== displayValue;
+    text = (text && text.length && text).toString();
+    displayValue = (displayValue && displayValue.length && displayValue[0]).toString();
+    return text == displayValue;
   }
 
   /**
@@ -199,16 +231,6 @@ export function useDropDownDataGridEvent({
     if (!e.component.isNotFirstLoad) {
       e.component.isNotFirstLoad = true;
       ddbInstance.focus();
-    }
-  }
-  /**
-   * 当 UI 组件处于焦点且已按下某个键时执行的功能。
-   * @param e
-   */
-  function customDataGridOnKeyDown(e) {
-    if (e.event.keyCode === 13) {
-      // Enter press
-      gridBoxValue.value = [focusedRowKey.value];
     }
   }
 
@@ -226,11 +248,11 @@ export function useDropDownDataGridEvent({
     // dataType:'string' | 'number' | 'date' | 'boolean' | 'object' | 'datetime';
     switch (item.dataType) {
       case 'string': {
-        item.alignment = 'left';
+        item.alignment = 'center';
         break;
       }
       case 'number': {
-        item.alignment = 'right';
+        item.alignment = 'center';
         break;
       }
       // case 'time': {
@@ -239,7 +261,7 @@ export function useDropDownDataGridEvent({
       //   break;
       // }
       case 'date': {
-        item.alignment = 'right';
+        item.alignment = 'center';
         item.format = 'yyyy-MM-dd';
         item.minWidth = 180;
         break;
@@ -255,11 +277,11 @@ export function useDropDownDataGridEvent({
         break;
       }
       case 'object': {
-        item.alignment = 'left';
+        item.alignment = 'center';
         break;
       }
       default: {
-        item.alignment = 'left';
+        item.alignment = 'center';
         break;
       }
     }
@@ -267,6 +289,9 @@ export function useDropDownDataGridEvent({
   }
 
   return {
+    filterRow,
+    headerFilter,
+    selection,
     getViewColumns,
     dataGridDataSource,
     dropDownBoxDataSource,
@@ -277,6 +302,5 @@ export function useDropDownDataGridEvent({
     customClose,
     customKeyDown,
     customDataGridOnContentReady,
-    customDataGridOnKeyDown,
   };
 }

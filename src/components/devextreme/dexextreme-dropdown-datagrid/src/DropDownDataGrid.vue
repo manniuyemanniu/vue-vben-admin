@@ -13,26 +13,37 @@
       <template #dataGridContentTemplate="{}">
         <DxDataGrid
           ref="dxDropDownDataGridElRef"
-          key-expr="code"
+          class="dropdown-wapper-dataGrid"
           :data-source="dataGridDataSource"
           :remote-operations="true"
           :selected-row-keys="[currentValue]"
-          :on-row-dbl-click="customOnRowDblClick"
           :hover-state-enabled="true"
           :focused-row-enabled="true"
-          :focused-row-key="currentValue"
+          :focused-row-key="focusedRowKey"
+          :accept-custom-value="true"
           :showColumnLines="true"
           :showRowLines="true"
           :showBorders="true"
+          :headerFilter="headerFilter"
           @initialized="dataGridOnInitialized"
+          :on-key-down="customDataGridOnKeyDown"
+          :on-content-ready="customDataGridOnContentReady"
+          :on-selection-changed="customSelectionChanged"
         >
+          <!-- :filterRow="filterRow"
+          :headerFilter="headerFilter"
+           :selection="selection"
+           
+          v-model:focused-row-index="focusedRowIndex"
+          v-model:focused-row-key="focusedRowKey" -->
           <!-- 处理列信息 开始 -->
+
           <template v-for="column in getViewColumns" :key="column.dataField">
             <DxColumn v-bind="column" />
           </template>
           <!-- 处理列信息 结束 -->
 
-          <DxPaging :enabled="true" :page-size="10" />
+          <DxPaging :enabled="true" :page-size="20" />
           <DxScrolling mode="virtual" />
           <DxSelection mode="single" />
         </DxDataGrid>
@@ -80,12 +91,13 @@
       const wrapRef = ref(null);
       const dxDropDownElRef = ref<Nullable<dropDownDataGridActionOptions>>(null);
       const dxDropDownDataGridElRef = ref(null);
-      const focusedRowIndex = ref<number>(0);
+      const focusedRowIndex = ref<number>(-1);
       const focusedRowKey = ref<any>(null);
       const dataGridRef = ref<any>(null);
       // const gridBoxOpened = ref<boolean>(false);
       const gridBoxValue = ref<any>([]);
       let { value: currentValue, onValueChanged, rowIndex } = unref(props);
+      focusedRowKey.value = currentValue;
       const { prefixCls } = useDesign('dropDown-DataGrid');
 
       //#region 【computed计算属性[getProps|getDataGridClass]】
@@ -113,6 +125,9 @@
       }
 
       const {
+        filterRow,
+        headerFilter,
+        selection,
         dataGridDataSource,
         dropDownBoxDataSource,
         instance,
@@ -121,7 +136,7 @@
         customOpened,
         customClose,
         customKeyDown,
-        // customDataGridOnContentReady,
+        customDataGridOnContentReady,
         // customDataGridOnKeyDown,
         getViewColumns,
       } = useDropDownDataGridEvent({
@@ -134,10 +149,6 @@
         gridBoxValue,
         dataGridRef,
       });
-
-      console.log('dataGridDataSource', dataGridDataSource);
-      // const { customInput, customOpened, customClose, customKeyDown } =
-      //   useDropDownDataGridMethods();
 
       const dropDownDataGridAction: dropDownDataGridActionOptions = {
         setProps,
@@ -165,7 +176,6 @@
         propsData = omit(propsData);
         return propsData;
       });
-
       //#endregion
 
       //#region 【expose暴露方法】
@@ -186,11 +196,29 @@
       emit('register', dropDownDataGridAction);
       //#endregion
 
-      function customOnRowDblClick(e: any) {
+      function customSelectionChanged(e: any) {
+        debugger;
+        console.log('customSelectionChanged', e);
+        var data = e.component.getSelectedRowsData();
         const { valueExpr } = unref(getProps);
-        currentValue = e.data[valueExpr];
-        onValueChanged(rowIndex, e.data);
+        currentValue = data[valueExpr];
         instance().close();
+        onValueChanged(rowIndex, data);
+      }
+
+      /**
+       * 当 UI 组件处于焦点且已按下某个键时执行的功能。
+       * @param e
+       */
+      function customDataGridOnKeyDown(_e) {
+        // if (e.event.keyCode === 13) {
+        //   // Enter press
+        //   var data = e.component.getSelectedRowsData();
+        //   const { valueExpr } = unref(getProps);
+        //   currentValue = data[valueExpr];
+        //   instance().close();
+        //   onValueChanged(rowIndex, data);
+        // }
       }
 
       function dataGridOnInitialized(e) {
@@ -198,6 +226,9 @@
       }
 
       return {
+        filterRow,
+        headerFilter,
+        selection,
         dataGridRef,
         dxDropDownElRef,
         dxDropDownDataGridElRef,
@@ -206,8 +237,12 @@
         getBindValues,
         dataGridDataSource,
         getViewColumns,
-        customOnRowDblClick,
+        focusedRowKey,
+        focusedRowIndex,
+        customSelectionChanged,
+        customDataGridOnKeyDown,
         dataGridOnInitialized,
+        customDataGridOnContentReady,
       };
     },
   });
@@ -222,6 +257,12 @@
 
     ::v-deep(.drop-down-input) {
       text-align: left !important;
+    }
+
+    .dx-pager .dx-pages {
+      white-space: nowrap;
+      float: right;
+      margin-right: 10px;
     }
   }
 </style>

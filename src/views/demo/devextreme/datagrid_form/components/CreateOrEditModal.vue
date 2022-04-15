@@ -28,9 +28,12 @@
             </span>
             <span v-else>{{ data.data.StateID }}</span>
           </template> -->
+        <template #depatentCellTemplate="{ data }">
+          <span>{{ data.data.departmentCode }}</span>
+        </template>
         <template #dropDownBoxEditor="{ data: cellInfo }">
           <DropDownDataGrid
-            valueExpr="code"
+            valueExpr="id"
             displayExpr="code"
             customKeyExpr="id"
             :value="cellInfo.value"
@@ -38,6 +41,7 @@
             :searchExpr="searchExpr"
             :on-value-changed="onValueChanged"
             :customDataSource="department"
+            :customColumn="customColumn"
             :dropDownOptions="{ height: 500, width: 500 }"
           />
         </template>
@@ -67,7 +71,7 @@
   import { BasicDrawer } from '/@/components/Drawer';
   import { isDef } from '/@/utils/is';
 
-  import { tableData, department, columns } from './data';
+  import { tableData, department, customColumn, columns } from './data';
   import { isDevMode, isProdMode } from '/@/utils/env';
   export default defineComponent({
     name: 'CreateOrEditModal',
@@ -157,11 +161,16 @@
       //#region 【网格】
 
       const onValueChanged = async (index, data) => {
-        let dataGrid = await instanceDxDataGrid();
+        debugger;
+        console.log('onValueChanged', index);
+        console.log('onValueChanged', data);
+        let dxdataGrid = await instanceDxDataGrid();
         if (isDef(data)) {
-          dataGrid.cellValue(index, 'departmentId', data.id);
-          dataGrid.cellValue(index, 'departmentCode', data.code);
-          dataGrid.cellValue(index, 'departmentName', data.name);
+          debugger;
+          console.log('onValueChanged', dxdataGrid);
+          dxdataGrid.cellValue(index, 'departmentId', data.id);
+          dxdataGrid.cellValue(index, 'departmentCode', data.code);
+          dxdataGrid.cellValue(index, 'departmentName', data.name);
         }
       };
       const searchExpr = ['id', 'code', 'name'];
@@ -197,6 +206,7 @@
         searchExpr,
         onValueChanged,
         department,
+        customColumn,
         code,
       };
     },
