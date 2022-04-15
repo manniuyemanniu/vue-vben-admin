@@ -17,6 +17,12 @@ import { setupI18n } from '/@/locales/setupI18n';
 import { registerGlobComp } from '/@/components/registerGlobComp';
 import themes from 'devextreme/ui/themes';
 
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+
+import FormMakingV3 from '/@/form-making-v3/build/form-making-v3.es.js';
+import '/@/form-making-v3/build/index.css';
+
 async function bootstrap() {
   const app = createApp(App);
 
@@ -45,10 +51,10 @@ async function bootstrap() {
   // Configure global error handling
   setupErrorHandle(app);
 
-  console.log(themes.current());
   // https://next.router.vuejs.org/api/#isready
   // await router.isReady();
 
+  app.use(ElementPlus).use(FormMakingV3);
   app.mount('#app');
 }
 

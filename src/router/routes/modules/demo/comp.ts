@@ -98,6 +98,14 @@ const comp: AppRouteModule = {
             title: t('routes.demo.devextreme.datagrid_form'),
           },
         },
+        {
+          path: 'FormMakingV3',
+          name: 'FormMakingV3',
+          component: () => import('/@/views/demo/devextreme/form-making-v3/index.vue'),
+          meta: {
+            title: 'FormMakingV3',
+          },
+        },
       ],
     },
     {

@@ -52,6 +52,7 @@
     "devextreme-aspnet-data-nojquery": "^2.8.6",
     "devextreme-vue": "^21.2.6",
     "echarts": "^5.3.1",
+    "element-plus": "^2.1.9",
     "exceljs": "^4.3.0",
     "file-saver": "^2.0.5",
     "intro.js": "^5.0.0",
