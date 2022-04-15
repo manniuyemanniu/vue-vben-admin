@@ -20,8 +20,8 @@ import themes from 'devextreme/ui/themes';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 
-import FormMakingV3 from '/@/form-making-v3/build/form-making-v3.es.js';
-import '/@/form-making-v3/build/index.css';
+import FormMakingV3 from '/@/form-making-v3/dist/form-making-v3.es.js';
+import '/@/form-making-v3/dist/index.css';
 
 async function bootstrap() {
   const app = createApp(App);
